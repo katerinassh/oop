@@ -22,16 +22,16 @@ class QstSomeAnswer:# запитання з вибором декількох п
         self.numoptions = numoptions
         self.numright = numright
 
-class QstScale: # запитання з відповіддю на шкалі
+class QstScale: # запитання з відповідю на шкалі
     def __init__(self, start, end, step):
         self.step = step
         self.start = start
         self.end = end
 
-class QstTableOne(QstOneAnswer): # таблиця відповідностей
+class QstTableOne(QstOneAnswer):
     def __init__(self, size):
         self.size = size
 
-class QstTableSome(QstSomeAnswer): # таблиця з кількома відповідями на питання
+class QstTableSome(QstSomeAnswer):
     def __init__(self, size):
         self.size = size
