@@ -1,23 +1,37 @@
 class QstTrueFalse: # клас для виду запитань із двома варіантами відповіді так/ні
-    def true_false(self):
-        return bool
+    def __init__(self, question, answer):
+        self.answer = answer
+        self.question = question
 
 class QstEnterText: # клас для виду запитань із введенням текстової відповідді
-    def small_answer(self): # метод для введення відповідді з обмеженням у 50 символів
-        return
+    def __init__(self, question, answer):
+        self.question = question
+        self.answer = answer
 
-    def big_answer(self): # метод для введення відповідді з обмеженням у 1000 символів
-        return
+class QstEnterTextShort(QstEnterText):
 
-
-class OneAnswer():# запитання з вибором однієї правильної відповіді
+class QstOneAnswer:# запитання з вибором однієї правильної відповіді
     def __init__(self, question, numoptions):
         self.question = question
         self.numoptions = numoptions
 
 
-class SomeAnswer():# запитання з вибором декількох правильних відповідей
+class QstSomeAnswer:# запитання з вибором декількох правильних відповідей
     def __init__(self, question, numoptions, numright):
         self.question = question
         self.numoptions = numoptions
         self.numright = numright
+
+class QstScale: # запитання з відповідю на шкалі
+    def __init__(self, start, end, step):
+        self.step = step
+        self.start = start
+        self.end = end
+
+class QstTableOne(QstOneAnswer):
+    def __init__(self, size):
+        self.size = size
+
+class QstTableSome(QstSomeAnswer):
+    def __init__(self, size):
+        self.size = size
