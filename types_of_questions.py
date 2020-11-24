@@ -20,51 +20,40 @@ class QstOneAnswer:# запитання з вибором однієї прав�
         self.rating = 0
 
     def enterOption(self, option):
-        self._answerOptions.push(option)
+        self._answerOptions.append(option)
 
     def setRating(self, rating):
         self.rating = rating
 
-    def userMarkPerQ(self, choice):
+    def userMarkOneAnswer(self, choice):
         mark = 0
         if choice == self._rightAnswer:
             mark = self.rating
         return mark
 
-    def __str__(self):
-        for i in range (self._answerOptions):
-            options = str(self._answerOptions.push[i]) + '\n'
-        return str(self._question) + '\n' + options
+    def printQ(self):
+        options = ''
+        for i in self._answerOptions:
+            options += i + '\n'
+        print(str(self._question) + '\n' + options)
 
 
-class QstSomeAnswer:# запитання з вибором декількох правильних відповідей
-    def __init__(self, question, rightIndexes):
-        self._question = question
-        self._answerOptions = len([] * rightIndexes)
-        self._rightIndexes = rightIndexes
+class QstSomeAnswer(QstOneAnswer):  # запитання з вибором декількох правильних відповідей, наслідує клас з одним правильним
+    def __init__(self, question, numOptions, rightAnswerIndex):
+        super().__init__(question, numOptions, rightAnswerIndex)
 
-    def enterOption(self, option):
-        self._answerOptions.push(option)
-
-    def setRating(self, rating):
-        self.rating = rating
-
-    def userMarkPerQ(self, choice):
+    def userMarkSomeAnswer(self, choice):
         mark = 0
+        markForPoint = self.rating / len(self._rightAnswer)
         for i in range(len(choice)):
             for j in range(len(self._rightAnswer)):
                 if choice[i] == self._rightAnswer[j]:
-                    mark += self.rating / len(choice)
+                    mark += markForPoint
                     break
         return mark
 
-    def __str__(self):
-        for i in range (self._answerOptions):
-            options = str(self._answerOptions.push[i]) + '\n'
-        return str(self._question) + '\n' + options
 
-
-class QstTableSome(QstSomeAnswer): # питання з кількома варіантами відповіді в таблиці
+class QstTableSome(QstSomeAnswer): # запитання з кількома варіантами відповіді в таблиці, наслідує клас з декількома варіантами
     def __init__(self, size):
         self.size = size
 
@@ -77,4 +66,3 @@ class QstScale: # запитання з відповіддю на шкалі
 class QstTableOne(QstOneAnswer): # встановлення відповідності
     def __init__(self, size):
         self.size = size
-
