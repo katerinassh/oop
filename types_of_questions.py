@@ -53,9 +53,46 @@ class QstSomeAnswer(QstOneAnswer):  # запитання з вибором де�
         return mark
 
 
-class QstTableSome(QstSomeAnswer): # запитання з кількома варіантами відповіді в таблиці, наслідує клас з декількома варіантами
-    def __init__(self, size):
-        self.size = size
+class QstTable(QstSomeAnswer):  # запитання з кількома варіантами відповіді в таблиці, наслідує клас з декількома варіантами відповідей
+    def __init__(self, mainQuestion, questions, options, rightAnswerIndex):
+        super().__init__(mainQuestion, len(options), rightAnswerIndex)
+        self.questions = questions
+        self.options = options
+        self.sizeHeight = len(questions)
+        self.table = [] * self.sizeHeight
+
+    def formTable(self, rating):
+        for i in range(self.sizeHeight):
+            qRow = QstSomeAnswer(self.questions[i], len(self.options), self._rightAnswer[i])
+            self.table.append(qRow)
+            self.table[i].setRating(rating / self.sizeHeight)
+
+    def userMarkTable(self, choice):
+        mark = 0
+        for i in range(self.sizeHeight):
+            if len(choice[i]) > len(self._rightAnswer[i]):
+                break
+            else:
+                mark += self.table[i].userMarkPerSomeQ(choice[i])
+        return mark
+
+    def printTable(self):
+        print(self._question)
+        row = ''
+        for i in range(self.sizeHeight):
+            row += str(self.questions[i]) + ': '
+            for j in range(len(self.options)):
+                row += str(self.options[j]) + ' '
+            print(row)
+            row = ''
+
+
+#firstQuestion = QstTable('Who am I for...?', ['Kate', 'Jane'], ['friend', 'nobody', 'stranger'], [[1,3],[1]]) #testing
+#firstQuestion.formTable(1)
+#firstQuestion.printTable()
+
+#print(firstQuestion.userMarkTable([[1,3],[1,2]]))
+
 
 class QstScale: # запитання з відповіддю на шкалі
     def __init__(self, start, end, step):
