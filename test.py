@@ -27,9 +27,9 @@ class Test(): # клас менеджер-тест, взаємодія і з а�
             self.questions.append(qst)
 
 
-
-    def _remove(self, number):# метод видаляє певне питання з тесту
-        return
+    def remove(self, number):# метод видаляє певне питання з тесту
+        self.questions.pop(number - 1)
+        self.qamount -= 1
 
     def _edit(self, number):# метод редагує питання
         return
