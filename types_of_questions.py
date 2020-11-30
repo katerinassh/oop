@@ -1,18 +1,76 @@
-class QstTrueFalse: # клас для виду запитань із двома варіантами відповіді так/ні
-    def __init__(self, question, answer):
-        self.answer = answer
-        self.question = question
+class QstTrueFalse:  # клас для виду запитань із двома варіантами відповіді правда/брехня
+    def __init__(self, question, right_answer):
+        self._question = question
+        self._right_answer = right_answer
+        self._answerOptions = ["True", "False"]
+        self.user_answer = None
+        self.rating = 0
 
-class QstEnterText: # клас для виду запитань із введенням текстової відповідді
-    def __init__(self, question, answer):
-        self.question = question
-        self.answer = answer
+    def setRating(self, rating):
+        self.rating = rating
 
-class QstEnterTextShort(QstEnterText):
-    def __init__(self, answer):
-        self.answer = answer
+    def userGetAnswer(self):
+        self.user_answer = input()
 
-class QstOneAnswer:# запитання з вибором однієї правильної відповіді
+    def userMarkAnswer(self):
+        mark = 0
+        if self.user_answer == self._right_answer:
+            mark = self.rating
+        return mark
+
+    def printQ(self):
+        options = ''
+        for i in self._answerOptions:
+            options += i + '\n'
+        print(str(self._question) + '\n' + options)
+
+
+class QstEnterText:  # клас для виду запитань із введенням текстової відповідді
+    def __init__(self, question, right_answer):
+        self._question = question
+        self._right_answer = right_answer
+        self.rating = 0
+        self.user_answer = None
+
+    def setRating(self, rating):
+        self.rating = rating
+
+    def userGetAnswer(self):
+        self.user_answer = input()[:1000]
+
+    def userMarkAnswer(self):
+        mark = 0
+        if self.user_answer == self._right_answer:
+            mark = self.rating
+        return mark
+
+    def printQ(self):
+        print(str(self._question))
+
+
+class QstEnterTextShort(QstEnterText):  # клас для виду запитань із введенням короткої текстової відповідді
+    def __init__(self, question, right_answer):
+        super().__init__(question, right_answer)
+        self.rating = 0
+        self.user_answer = None
+
+    def setRating(self, rating):
+        self.rating = rating
+
+    def userGetAnswer(self):
+        self.user_answer = input()[:100]
+
+    def userMarkAnswer(self):
+        mark = 0
+        if self.user_answer == self._right_answer:
+            mark = self.rating
+        return mark
+
+    def printQ(self):
+        print(str(self._question))
+
+
+class QstOneAnswer:  # запитання з вибором однієї правильної відповіді
     def __init__(self, question, numOptions, rightAnswerIndex):
         self._question = question
         self._answerOptions = [] * numOptions
@@ -94,12 +152,13 @@ class QstTable(QstSomeAnswer):  # запитання з кількома вар�
 #print(firstQuestion.userMarkTable([[1,3],[1,2]]))
 
 
-class QstScale: # запитання з відповіддю на шкалі
+class QstScale:  # запитання з відповіддю на шкалі
     def __init__(self, start, end, step):
         self.step = step
         self.start = start
         self.end = end
 
-class QstTableOne(QstOneAnswer): # встановлення відповідності
+
+class QstTableOne(QstOneAnswer):  # встановлення відповідності
     def __init__(self, size):
         self.size = size
