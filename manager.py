@@ -1,6 +1,13 @@
-class Manager(Test):
-    def create_newtest(self):  # метод створює новий тест
+import test
+import types_of_questions
+
+class Manager:
+    def __init__(self):
         return
+
+    def create_new_test(self, name_of_test):  # метод створює новий тест
+        new_test = Test(name_of_test)
+        return new_test
 
     def display(self):# метод виводить тест для проходження
         return
