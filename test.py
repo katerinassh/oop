@@ -35,5 +35,8 @@ class Test(): # клас менеджер-тест, взаємодія і з а�
         return
 
     def totalMark(self):# метод рахує повний бал тесту
-        return
+        sum = 0
+        for i in self.questions:
+            sum += i.rating()
+        return sum
 
