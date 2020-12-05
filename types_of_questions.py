@@ -25,7 +25,7 @@ class QstTrueFalse:  # клас для виду запитань із двома
             options += i + '\n'
         print(str(self._question) + '\n' + options)
 
-    def add_qst_info(self):
+    def add(self):
         print('Input question\n')
         self._question = input()
         print('Input the right answer (True or False)\n')
@@ -33,36 +33,26 @@ class QstTrueFalse:  # клас для виду запитань із двома
         print('Input question valuation\n')
         self.rating = input()
 
-    def save_qst(self, file_test, indx_qst):
-        the_file = open("file_test","a")
+    def save_qst(self, file, indx_qst):
+        # *file = "test.txt"
+        the_file = open(file, "a")
 
-        the_file.write("\n\n**")
-        the_file.write(str(indx_qst))
-        the_file.write("**\n")
-
-        the_file.write(self._type)
-        the_file.write(self._question)
-        the_file.write(str(self.rating))
-        the_file.write("\n\n")
+        the_file.write("\n\n**" + str(indx_qst) + "**\n")
+        the_file.write(self._type + "\n" + self._question + "\n" + str(self.rating)+ "\n\n")
 
         for i in range(2):
-            the_file.write(self._answerOptions[i])
-            the_file.write("\n")
-        the_file.write("\n")
-        the_file.write(self._right_answer)
+            the_file.write(self._answerOptions[i] + "\n")
+        the_file.write("\n" + str(self._right_answer))
 
         the_file.close()
 
-    def save_answ(self, file_answs, indx_qst):
-        the_file = open("file_answs", "a")
+    def save_answ(self, file, indx_qst):
+        # *file = "answs.txt"
+        the_file = open(file, "a")
 
-        the_file.write("\n*")
-        the_file.write(str(indx_qst))
-        the_file.write("*\n")
-
-        the_file.write(str(self.user_answer))
-        the_file.write("\n")
-        the_file.write(str(QstTrueFalse.userMarkAnswer()))
+        qst = QstTrueFalse()
+        the_file.write("\n\n**" + str(indx_qst) + "**\n")
+        the_file.write(str(self.user_answer) + "\n" + str(qst.userMarkAnswer()))
 
         the_file.close()
 
@@ -90,7 +80,7 @@ class QstEnterText:  # клас для виду запитань із введе
     def printQ(self):
         print(str(self._question))
 
-    def add_qst_info(self):
+    def add(self):
         print('Input question\n')
         self._question = input()
         print('Input the right answer\n')
@@ -98,33 +88,24 @@ class QstEnterText:  # клас для виду запитань із введе
         print('Input question valuation\n')
         self.rating = input()
 
-    def save_qst(self, file_test, indx_qst):
-        the_file = open("file_test","a")
+    def save_qst(self, file, indx_qst):
+        # *file = "test.txt"
+        the_file = open(file, "a")
 
-        the_file.write("\n\n**")
-        the_file.write(str(indx_qst))
-        the_file.write("**\n")
+        the_file.write("\n\n**" + str(indx_qst) + "**\n")
+        the_file.write(self._type + "\n" + self._question + "\n" + str(self.rating)+ "\n\n")
 
-        the_file.write(self._type)
-        the_file.write(self._question)
-        the_file.write(str(self.rating))
-        the_file.write("\n\n")
-
-        the_file.write("\n")
-        the_file.write(str(self._right_answer))
+        the_file.write("\n" + str(self._right_answer))
 
         the_file.close()
 
-    def save_answ(self, file_answs, indx_qst):
-        the_file = open("file_answs", "a")
+    def save_answ(self, file, indx_qst):
+        # *file = "answs.txt"
+        the_file = open(file, "a")
 
-        the_file.write("\n*")
-        the_file.write(str(indx_qst))
-        the_file.write("*\n")
-
-        the_file.write(str(self.user_answer))
-        the_file.write("\n")
-        the_file.write(str(QstEnterText.userMarkAnswer()))
+        qst = QstEnterText()
+        the_file.write("\n\n**" + str(indx_qst) + "**\n")
+        the_file.write(str(self.user_answer) + "\n" + str(qst.userMarkAnswer()))
 
         the_file.close()
 
@@ -139,16 +120,13 @@ class QstEnterTextShort(QstEnterText):  # клас для виду запита�
     def userGetAnswer(self):
         self.user_answer = input()[:100]
 
-    def save_answ(self, file_answs, indx_qst):
-        the_file = open("file_answs", "a")
+    def save_answ(self, file, indx_qst):
+        # *file = "test.txt"
+        the_file = open(file, "a")
 
-        the_file.write("\n*")
-        the_file.write(str(indx_qst))
-        the_file.write("*\n")
-
-        the_file.write(str(self.user_answer))
-        the_file.write("\n")
-        the_file.write(str(QstEnterTextShort.userMarkAnswer()))
+        qst = QstEnterTextShort()
+        the_file.write("\n\n**" + str(indx_qst) + "**\n")
+        the_file.write(str(self.user_answer) + "\n" + str(qst.userMarkAnswer()))
 
         the_file.close()
 
