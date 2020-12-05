@@ -71,11 +71,13 @@ class QstEnterTextShort(QstEnterText):  # клас для виду запита�
 
 
 class QstOneAnswer:  # запитання з вибором однієї правильної відповіді
-    def __init__(self, question, numOptions, rightAnswerIndex):
-        self._question = question
-        self._answerOptions = [] * numOptions
-        self._rightAnswer = rightAnswerIndex
+    def __init__(self):
+        self._question = ''
+        self._answerOptions = []
+        self._rightAnswer = None
         self.rating = 0
+        self.user_answer = None
+        self.user_mark = 0
 
     def enterOption(self, option):
         self._answerOptions.append(option)
@@ -83,11 +85,41 @@ class QstOneAnswer:  # запитання з вибором однієї пра�
     def setRating(self, rating):
         self.rating = rating
 
-    def userMarkOneAnswer(self, choice):
+    def add(self):
+        print('Input question')
+        self._question = input()
+        print('Input number of options\n')
+        numOptions = int(input())
+        self._answerOptions = [] * numOptions
+        print('Input index of right answer\n')
+        self._rightAnswer = int(input())
+        print('Input question valuation\n')
+        self.setRating(input())
+        for i in range(numOptions):
+            print('Input option ' + str(i) + ' : ')
+            option = input()
+            self.enterOption(option)
+
+    def userGetAnswer(self, file):
+        self.user_answer = input()
+        fanswers = open(file, "a")
+        fanswers.write(self.user_answer)
+        fanswers.close()
+        self.userMark(self.user_answer)
+
+    def userMark(self, choice):
         mark = 0
         if choice == self._rightAnswer:
             mark = self.rating
-        return mark
+        self.user_mark = mark
+
+    def writeTestFile(self, file):
+        ftest = open(file, "a")
+        ftest.write('QstOneAnswer\n')
+        options = ''
+        for i in self._answerOptions:
+            options += i + '\n'
+        ftest.write(str(self._question) + '\n' + options)
 
     def printQ(self):
         options = ''
@@ -97,10 +129,25 @@ class QstOneAnswer:  # запитання з вибором однієї пра�
 
 
 class QstSomeAnswer(QstOneAnswer):  # запитання з вибором декількох правильних відповідей, наслідує клас з одним правильним
-    def __init__(self, question, numOptions, rightAnswerIndex):
-        super().__init__(question, numOptions, rightAnswerIndex)
+    def __init__(self):
+        super().__init__()
 
-    def userMarkSomeAnswer(self, choice):
+    def add(self):
+        print('Input question')
+        self._question = input()
+        print('Input number of options\n')
+        numOptions = int(input())
+        self._answerOptions = [] * numOptions
+        print('Input indexes of right answers in format [[i],[i1,i]]\n')
+        self._rightAnswer = input()
+        print('Input question valuation\n')
+        self.setRating(input())
+        for i in range(numOptions):
+            print('Input option ' + str(i) + ' : ')
+            option = input()
+            self.enterOption(option)
+
+    def userMark(self, choice):
         mark = 0
         markForPoint = self.rating / len(self._rightAnswer)
         for i in range(len(choice)):
@@ -108,16 +155,35 @@ class QstSomeAnswer(QstOneAnswer):  # запитання з вибором де�
                 if choice[i] == self._rightAnswer[j]:
                     mark += markForPoint
                     break
-        return mark
+        self.user_mark = mark
+
+    def writeTestFile(self, file):
+        ftest = open(file, "a")
+        ftest.write('QstSomeAnswer\n')
+        options = ''
+        for i in self._answerOptions:
+            options += i + '\n'
+        ftest.write(str(self._question) + '\n' + options)
 
 
 class QstTable(QstSomeAnswer):  # запитання з кількома варіантами відповіді в таблиці, наслідує клас з декількома варіантами відповідей
-    def __init__(self, mainQuestion, questions, options, rightAnswerIndex):
-        super().__init__(mainQuestion, len(options), rightAnswerIndex)
-        self.questions = questions
-        self.options = options
-        self.sizeHeight = len(questions)
+    def __init__(self):
+        self.questions = []
+        self.options = []
+        self.sizeHeight = len(self.questions)
         self.table = [] * self.sizeHeight
+
+    def add(self):
+        print('Input main question')
+        self._question = input()
+        print('Input local questions in format ['',''...]')
+        self.questions = input()
+        print('Input options in format ['',''...]\n')
+        self.options = input()
+        print('Input indexes of right answers in format [[i],[i1,i]]\n')
+        self._rightAnswer = input()
+        print('Input question valuation\n')
+        self.formTable(int(input()))
 
     def formTable(self, rating):
         for i in range(self.sizeHeight):
@@ -125,14 +191,34 @@ class QstTable(QstSomeAnswer):  # запитання з кількома вар�
             self.table.append(qRow)
             self.table[i].setRating(rating / self.sizeHeight)
 
-    def userMarkTable(self, choice):
+    def userMark(self, choice):
         mark = 0
         for i in range(self.sizeHeight):
             if len(choice[i]) > len(self._rightAnswer[i]):
                 break
             else:
                 mark += self.table[i].userMarkPerSomeQ(choice[i])
-        return mark
+        self.user_mark = mark
+
+    def userGetAnswer(self, file):
+        self.user_answer = input()
+        fanswers = open(file, "a")
+        fanswers.write(self.user_answer)
+        fanswers.close()
+        self.userMark(self.user_answer)
+
+    def writeTestFile(self, file):
+        ftest = open(file, "a")
+        ftest.write('QstTable\n')
+        ftest.write(self._question)
+        row = ''
+        for i in range(self.sizeHeight):
+            row += str(self.questions[i]) + ': '
+            for j in range(len(self.options)):
+                row += str(self.options[j]) + ' '
+            ftest.write(row)
+            row = ''
+        ftest.close()
 
     def printTable(self):
         print(self._question)
@@ -143,13 +229,6 @@ class QstTable(QstSomeAnswer):  # запитання з кількома вар�
                 row += str(self.options[j]) + ' '
             print(row)
             row = ''
-
-
-#firstQuestion = QstTable('Who am I for...?', ['Kate', 'Jane'], ['friend', 'nobody', 'stranger'], [[1,3],[1]]) #testing
-#firstQuestion.formTable(1)
-#firstQuestion.printTable()
-
-#print(firstQuestion.userMarkTable([[1,3],[1,2]]))
 
 
 class QstScale:  # запитання з відповіддю на шкалі
