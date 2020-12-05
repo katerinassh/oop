@@ -1,7 +1,8 @@
 class QstTrueFalse:  # клас для виду запитань із двома варіантами відповіді правда/брехня
-    def __init__(self, question, right_answer):
-        self._question = question
-        self._right_answer = right_answer
+    def __init__(self):
+        self._type = "TrueFalse"
+        self._question = None
+        self._right_answer = None
         self._answerOptions = ["True", "False"]
         self.user_answer = None
         self.rating = 0
@@ -24,11 +25,53 @@ class QstTrueFalse:  # клас для виду запитань із двома
             options += i + '\n'
         print(str(self._question) + '\n' + options)
 
+    def add_qst_info(self):
+        print('Input question\n')
+        self._question = input()
+        print('Input the right answer (True or False)\n')
+        self._right_answer = input()
+        print('Input question valuation\n')
+        self.rating = input()
+
+    def save_qst(self, file_test, indx_qst):
+        the_file = open("file_test","a")
+
+        the_file.write("\n\n**")
+        the_file.write(str(indx_qst))
+        the_file.write("**\n")
+
+        the_file.write(self._type)
+        the_file.write(self._question)
+        the_file.write(str(self.rating))
+        the_file.write("\n\n")
+
+        for i in range(2):
+            the_file.write(self._answerOptions[i])
+            the_file.write("\n")
+        the_file.write("\n")
+        the_file.write(self._right_answer)
+
+        the_file.close()
+
+    def save_answ(self, file_answs, indx_qst):
+        the_file = open("file_answs", "a")
+
+        the_file.write("\n*")
+        the_file.write(str(indx_qst))
+        the_file.write("*\n")
+
+        the_file.write(str(self.user_answer))
+        the_file.write("\n")
+        the_file.write(str(QstTrueFalse.userMarkAnswer()))
+
+        the_file.close()
+
 
 class QstEnterText:  # клас для виду запитань із введенням текстової відповідді
-    def __init__(self, question, right_answer):
-        self._question = question
-        self._right_answer = right_answer
+    def __init__(self):
+        self._type = "EnterLongText"
+        self._question = None
+        self._right_answer = None
         self.rating = 0
         self.user_answer = None
 
@@ -47,27 +90,67 @@ class QstEnterText:  # клас для виду запитань із введе
     def printQ(self):
         print(str(self._question))
 
+    def add_qst_info(self):
+        print('Input question\n')
+        self._question = input()
+        print('Input the right answer\n')
+        self._right_answer = input()
+        print('Input question valuation\n')
+        self.rating = input()
+
+    def save_qst(self, file_test, indx_qst):
+        the_file = open("file_test","a")
+
+        the_file.write("\n\n**")
+        the_file.write(str(indx_qst))
+        the_file.write("**\n")
+
+        the_file.write(self._type)
+        the_file.write(self._question)
+        the_file.write(str(self.rating))
+        the_file.write("\n\n")
+
+        the_file.write("\n")
+        the_file.write(str(self._right_answer))
+
+        the_file.close()
+
+    def save_answ(self, file_answs, indx_qst):
+        the_file = open("file_answs", "a")
+
+        the_file.write("\n*")
+        the_file.write(str(indx_qst))
+        the_file.write("*\n")
+
+        the_file.write(str(self.user_answer))
+        the_file.write("\n")
+        the_file.write(str(QstEnterText.userMarkAnswer()))
+
+        the_file.close()
+
 
 class QstEnterTextShort(QstEnterText):  # клас для виду запитань із введенням короткої текстової відповідді
-    def __init__(self, question, right_answer):
-        super().__init__(question, right_answer)
+    def __init__(self):
+        super().__init__()
+        self._type = "EnterShortText"
         self.rating = 0
         self.user_answer = None
-
-    def setRating(self, rating):
-        self.rating = rating
 
     def userGetAnswer(self):
         self.user_answer = input()[:100]
 
-    def userMarkAnswer(self):
-        mark = 0
-        if self.user_answer == self._right_answer:
-            mark = self.rating
-        return mark
+    def save_answ(self, file_answs, indx_qst):
+        the_file = open("file_answs", "a")
 
-    def printQ(self):
-        print(str(self._question))
+        the_file.write("\n*")
+        the_file.write(str(indx_qst))
+        the_file.write("*\n")
+
+        the_file.write(str(self.user_answer))
+        the_file.write("\n")
+        the_file.write(str(QstEnterTextShort.userMarkAnswer()))
+
+        the_file.close()
 
 
 class QstOneAnswer:  # запитання з вибором однієї правильної відповіді
@@ -216,7 +299,7 @@ class QstTableOne:  # встановлення відповідності
             self._user_answer[i - 1] = ans
 
     def getMark(self):
-        mark = 0;
+        mark = 0
         for i in range(self.num_questions):
             if self._right_answer[i]==self._user_answer[i]:
                 mark += self.rating/self.num_questions
