@@ -3,7 +3,7 @@ import types_of_questions
 class Test(): # клас менеджер-тест, взаємодія і з адміністратором, і зі звичайним користувачем
     def __init__(self, title, description):
         self.title = title
-        self.decription = description
+        self.description = description
         self.questions = []
         self.qamount = 0
         self.total_mark = 0
