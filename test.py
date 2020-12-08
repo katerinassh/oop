@@ -19,10 +19,21 @@ class Test(): # клас менеджер-тест, взаємодія і з а�
             self.questions[i].writeTestFile(self.ftest)
         self.ftest.close()
 
-    def workAnswerFile(self):# метод створює файл, у який записуються відповіді користувача
+    def createAnswerFile(self):# метод створює файл, у який будуть записуватись відповіді респондентів
         self.fanswers = open('{} answers.txt'.format(self.title), "w")
-        for i in range(len(self.questions)):
+        self.fanswers.write(self.title + "\n")
+        self.fanswers.close()
+
+    def workAnswerFile(self):  # метод записує усі відповіді певного респондента
+        self.fanswers = open('{} answers.txt'.format(self.title), "a")
+        self.fanswers.write(self.questions[0].user_anwer + "\n")
+        i = 1
+        while i < (len(self.questions)):
+            self.fanswers.write(str(i) + "\n")
             self.fanswers.write(self.questions[i].user_answer)
+            self.fanswers.write(self.questions[i].user_mark)
+            i += 1
+        self.fanswers.write("\n" + self.totalUserMark())
         self.fanswers.close()
 
     def add(self, type):# метод додає нове питання у тест
