@@ -8,17 +8,21 @@ class Test(): # клас менеджер-тест, взаємодія і з а�
         self.qamount = 0
         self.total_mark = 0
         self.mark = 0
+        self.ftest = None
+        self.fanswers = None
 
     def workTestFile(self):# метод створює файл, у який записуються питання тесту
         self.ftest = open('{}.txt'.format(self.title), "w")
         self.ftest.write(self.title + "\n")
-        self.ftest.write(self.decription + "\n")
+        self.ftest.write(self.description + "\n" + "\n")
         for i in range(len(self.questions)):
             self.questions[i].writeTestFile(self.ftest)
         self.ftest.close()
 
     def workAnswerFile(self):# метод створює файл, у який записуються відповіді користувача
         self.fanswers = open('{} answers.txt'.format(self.title), "w")
+        for i in range(len(self.questions)):
+            self.fanswers.write(self.questions[i].user_answer)
         self.fanswers.close()
 
     def add(self, type):# метод додає нове питання у тест
@@ -40,7 +44,6 @@ class Test(): # клас менеджер-тест, взаємодія і з а�
         if type == 'QstTableOne':
             qst = types_of_questions.QstTableOne()
         qst.add()
-        qst.writeTestFile(self.ftest)
         self.questions.append(qst)
 
     def remove(self, number):# метод видаляє певне питання з тесту
@@ -77,9 +80,11 @@ class Test(): # клас менеджер-тест, взаємодія і з а�
             self.mark += i.user_mark
         return self.mark
 
-
     def totalTestMark(self):# метод рахує повний бал тесту
         for i in self.questions:
             self.total_mark += i.rating()
         return self.total_mark
 
+    def passingTest(self):# метод відображає кожне питання для проходження, зберігає відповідь користувача
+
+        return

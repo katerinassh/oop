@@ -163,9 +163,6 @@ class QstOneAnswer:  # запитання з вибором однієї пра�
 
     def userGetAnswer(self, file):
         self.user_answer = input()
-        fanswers = open(file, "a")
-        fanswers.write(self.user_answer)
-        fanswers.close()
         self.userMark(self.user_answer)
 
     def userMark(self, choice):
@@ -175,12 +172,13 @@ class QstOneAnswer:  # запитання з вибором однієї пра�
         self.user_mark = mark
 
     def writeTestFile(self, file):
-        ftest = open(file, "a")
+        ftest = open('{}.txt'.format(file), "a")
         ftest.write('QstOneAnswer\n')
         options = ''
         for i in self._answerOptions:
             options += i + '\n'
         ftest.write(str(self._question) + '\n' + options)
+        ftest.close()
 
     def printQ(self):
         options = ''
@@ -219,7 +217,7 @@ class QstSomeAnswer(QstOneAnswer):  # запитання з вибором де�
         self.user_mark = mark
 
     def writeTestFile(self, file):
-        ftest = open(file, "a")
+        ftest = open('{}.txt'.format(file), "a")
         ftest.write('QstSomeAnswer\n')
         options = ''
         for i in self._answerOptions:
@@ -233,6 +231,7 @@ class QstTable(QstSomeAnswer):  # запитання з кількома вар�
         self.options = []
         self.sizeHeight = len(self.questions)
         self.table = [] * self.sizeHeight
+        self.user_answer = None
 
     def add(self):
         print('Input main question')
@@ -263,13 +262,10 @@ class QstTable(QstSomeAnswer):  # запитання з кількома вар�
 
     def userGetAnswer(self, file):
         self.user_answer = input()
-        fanswers = open(file, "a")
-        fanswers.write(self.user_answer)
-        fanswers.close()
         self.userMark(self.user_answer)
 
     def writeTestFile(self, file):
-        ftest = open(file, "a")
+        ftest = open('{}.txt'.format(file), "a")
         ftest.write('QstTable\n')
         ftest.write(self._question)
         row = ''
