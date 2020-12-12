@@ -389,12 +389,24 @@ class QstTableOne:  # встановлення відповідності
         print('Input question valuation\n')
         self.setRating(float(input()))
 
+    def readTestFile(self, file):
+        self._question = file.readline()
+        self.num_answers = int(file.readline())
+        for i in range(self.num_answers):
+            self.text_questions[i] = file.readline()
+            self.text_answers[i] = file.readline()
+        self._right_answer = file.readline()
+        self.rating = float(file.readline())
+
     def writeTestFile(self, file):
         ftest = open('{}.txt'.format(file), "a")
         ftest.write('QstTableOne\n')
-        ftest.write(str(self._question), end='\n')
+        ftest.write(self._question, end='\n')
+        ftest.write(str(self.num_answers), end='\n')
         for i in range(self.num_answers):
-            ftest.write(self.text_questions[i] + ' * ' + self.text_answers[i],end = '\n')
+            ftest.write(self.text_questions[i] + '\n' + self.text_answers[i],end = '\n')
+        ftest.write(self._right_answer, end = '\n')
+        ftest.write(str(self.rating)+'\n', end='\n')
         ftest.close()
 
 
