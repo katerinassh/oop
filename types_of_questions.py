@@ -34,11 +34,13 @@ class QstTrueFalse:  # клас для виду запитань із двома
         self.rating = input()
 
     def writeTestFile(self, the_file):
-        the_file.write("\n" + self._type + "\n" + self._question + "\n" + str(2) + "\n")
-
-        for i in range(2):
-            the_file.write(self._answerOptions[i] + "\n")
+        the_file.write("\n" + self._type + "\n" + self._question + "\n")
         the_file.write(str(self._right_answer) + "\n" + str(self.rating) + "\n")
+
+    def readTestFile(self, file):
+        self._question = file.readline().strip("\n")
+        self._right_answer = file.readline().strip("\n")
+        self.rating = float(file.readline().strip("\n"))
 
     def save_answ(self, file, indx_qst):
         # *file = "answs.txt"
@@ -86,6 +88,11 @@ class QstEnterText:  # клас для виду запитань із введе
 
     def writeTestFile(self, the_file):
         the_file.write("\n" + self._type + "\n" + self._question + "\n" + str(self._right_answer) + "\n" + str(self.rating) + "\n")
+
+    def readTestFile(self, file):
+        self._question = file.readline().strip("\n")
+        self._right_answer = file.readline().strip("\n")
+        self.rating = float(file.readline().strip("\n"))
 
     def save_answ(self, file, indx_qst):
         # *file = "answs.txt"
