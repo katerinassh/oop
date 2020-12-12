@@ -178,7 +178,8 @@ class QstOneAnswer:  # запитання з вибором однієї пра�
         options = ''
         for i in self._answerOptions:
             options += i + '\n'
-        file.write(str(self._question) + '\n' + options)
+        file.write(str(self._question) + '\n' + str(len(self._answerOptions)) + '\n' + options +
+                   self._rightAnswer + '\n' + self.rating + '\n')
 
     def printQ(self):
         options = ''
@@ -221,7 +222,8 @@ class QstSomeAnswer(QstOneAnswer):  # запитання з вибором де�
         options = ''
         for i in self._answerOptions:
             options += i + '\n'
-        file.write(str(self._question) + '\n' + options)
+        file.write(str(self._question) + '\n' + str(len(self._answerOptions)) + '\n' + options +
+                   self._rightAnswer + '\n' + self.rating + '\n')
 
 
 class QstTable(QstSomeAnswer):  # запитання з кількома варіантами відповіді в таблиці, наслідує клас з декількома варіантами відповідей
@@ -231,22 +233,24 @@ class QstTable(QstSomeAnswer):  # запитання з кількома вар�
         self.sizeHeight = len(self.questions)
         self.table = [] * self.sizeHeight
         self.user_answer = None
+        self.rating = 0
 
     def add(self):
         print('Input main question')
         self._question = input()
         print('Input local questions in format ['',''...]')
-        self.questions = input()
+        self.lquestions = input()
         print('Input options in format ['',''...]\n')
         self.options = input()
         print('Input indexes of right answers in format [[i],[i1,i]]\n')
         self._rightAnswer = input()
         print('Input question valuation\n')
-        self.formTable(int(input()))
+        self.rating = int(input())
+        self.formTable(self.rating)
 
     def formTable(self, rating):
         for i in range(self.sizeHeight):
-            qRow = QstSomeAnswer(self.questions[i], len(self.options), self._rightAnswer[i])
+            qRow = QstSomeAnswer(self.lquestions[i], len(self.options), self._rightAnswer[i])
             self.table.append(qRow)
             self.table[i].setRating(rating / self.sizeHeight)
 
@@ -268,11 +272,12 @@ class QstTable(QstSomeAnswer):  # запитання з кількома вар�
         file.write(self._question)
         row = ''
         for i in range(self.sizeHeight):
-            row += str(self.questions[i]) + ': '
+            row += str(self.lquestions[i]) + ': '
             for j in range(len(self.options)):
                 row += str(self.options[j]) + ' '
             file.write(row)
             row = ''
+        file.write(str(self._rightAnswer) + '\n' + str(self.rating) + '\n')
 
     def printTable(self):
         print(self._question)
