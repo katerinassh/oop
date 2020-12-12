@@ -1,6 +1,6 @@
 class QstTrueFalse:  # клас для виду запитань із двома варіантами відповіді правда/брехня
     def __init__(self):
-        self._type = "TrueFalse"
+        self._type = "QstTrueFalse"
         self._question = None
         self._right_answer = None
         self._answerOptions = ["True", "False"]
@@ -34,11 +34,13 @@ class QstTrueFalse:  # клас для виду запитань із двома
         self.rating = input()
 
     def writeTestFile(self, the_file):
-        the_file.write("\n" + self._type + "\n" + self._question + "\n" + str(2) + "\n")
-
-        for i in range(2):
-            the_file.write(self._answerOptions[i] + "\n")
+        the_file.write("\n" + self._type + "\n" + self._question + "\n")
         the_file.write(str(self._right_answer) + "\n" + str(self.rating) + "\n")
+
+    def readTestFile(self, file):
+        self._question = file.readline().strip("\n")
+        self._right_answer = file.readline().strip("\n")
+        self.rating = float(file.readline().strip("\n"))
 
     def save_answ(self, file, indx_qst):
         # *file = "answs.txt"
@@ -53,7 +55,7 @@ class QstTrueFalse:  # клас для виду запитань із двома
 
 class QstEnterText:  # клас для виду запитань із введенням текстової відповідді
     def __init__(self):
-        self._type = "EnterLongText"
+        self._type = "QstEnterLongText"
         self._question = None
         self._right_answer = None
         self.rating = 0
@@ -87,6 +89,11 @@ class QstEnterText:  # клас для виду запитань із введе
     def writeTestFile(self, the_file):
         the_file.write("\n" + self._type + "\n" + self._question + "\n" + str(self._right_answer) + "\n" + str(self.rating) + "\n")
 
+    def readTestFile(self, file):
+        self._question = file.readline().strip("\n")
+        self._right_answer = file.readline().strip("\n")
+        self.rating = float(file.readline().strip("\n"))
+
     def save_answ(self, file, indx_qst):
         # *file = "answs.txt"
         the_file = open(file, "a")
@@ -101,7 +108,7 @@ class QstEnterText:  # клас для виду запитань із введе
 class QstEnterTextShort(QstEnterText):  # клас для виду запитань із введенням короткої текстової відповідді
     def __init__(self):
         super().__init__()
-        self._type = "EnterShortText"
+        self._type = "QstEnterShortText"
         self.rating = 0
         self.user_answer = None
         self.user_mark = 0
@@ -339,8 +346,8 @@ class QstScale:  # запитання з відповіддю числом (пе
         
     def readTestFile(self, file):
         self._question = file.readline().strip("\n")
-        self._right_answer = float(file.readline()).strip("\n")
-        self.rating = float(file.readline()).strip("\n")
+        self._right_answer = float(file.readline().strip("\n"))
+        self.rating = float(file.readline().strip("\n"))
 
 
 class QstTableOne:  # встановлення відповідності
