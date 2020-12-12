@@ -308,12 +308,18 @@ class QstScale:  # запитання з відповіддю числом (пе
         self.user_answer = double(input())
         userMark(self.user_answer)
 
-    def writeTestFile(self, file):
-        ftest = open('{}.txt'.format(file), "a")
+    def writeTestFile(self, ftest):
         ftest.write('QstScale\n')
         ftest.write(self._question,end = '\n')
-        ftest.write(self.user_answer, end = '\n')
+        ftest.write(self._right_answer, end = '\n')
+        ftest.write(str(self.rating) + '\n',end = '\n')
         ftest.close()
+
+    def readTestFile(self, file):
+        self._question = file.readline()
+        self._right_answer = float(file.readline())
+        self.rating = float(file.readline())
+
 
 class QstTableOne:  # встановлення відповідності
     def __init__(self):
@@ -398,8 +404,7 @@ class QstTableOne:  # встановлення відповідності
         self._right_answer = file.readline()
         self.rating = float(file.readline())
 
-    def writeTestFile(self, file):
-        ftest = open('{}.txt'.format(file), "a")
+    def writeTestFile(self, ftest):
         ftest.write('QstTableOne\n')
         ftest.write(self._question, end='\n')
         ftest.write(str(self.num_answers), end='\n')
