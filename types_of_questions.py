@@ -146,19 +146,19 @@ class QstOneAnswer:  # запитання з вибором однієї пра�
     def add(self):
         print('Input question')
         self._question = input()
-        print('Input number of options\n')
+        print('Input number of options')
         numOptions = int(input())
         self._answerOptions = [] * numOptions
-        print('Input index of right answer\n')
+        print('Input index of right answer')
         self._rightAnswer = int(input())
-        print('Input question valuation\n')
+        print('Input question valuation')
         self.setRating(input())
         for i in range(numOptions):
-            print('Input option ' + str(i) + ' : ')
+            print('Input option ' + str(i + 1) + ' : ')
             option = input()
             self.enterOption(option)
 
-    def userGetAnswer(self, file):
+    def userGetAnswer(self):
         self.user_answer = input()
         self.userMark(self.user_answer)
 
@@ -198,24 +198,24 @@ class QstSomeAnswer(QstOneAnswer):  # запитання з вибором де�
     def add(self):
         print('Input question')
         self._question = input()
-        print('Input number of options\n')
+        print('Input number of options')
         numOptions = int(input())
         self._answerOptions = [] * numOptions
-        print('Input indexes of right answers in format [[i],[i1,i]]\n')
-        self._rightAnswer = input()
-        print('Input question valuation\n')
+        print('Input indexes of right answers in format [i],[i2]')
+        self._rightAnswer = [input()]
+        print('Input question valuation')
         self.setRating(input())
         for i in range(numOptions):
-            print('Input option ' + str(i) + ' : ')
+            print('Input option ' + str(i + 1) + ' : ')
             option = input()
             self.enterOption(option)
 
     def userMark(self, choice):
         mark = 0
-        markForPoint = self.rating / len(self._rightAnswer)
-        for i in range(len(choice)):
+        markForPoint = int(self.rating) / len(self._rightAnswer)
+        for i in range(len(choice.strip(','))):
             for j in range(len(self._rightAnswer)):
-                if choice[i] == self._rightAnswer[j]:
+                if choice.strip(',')[i] == self._rightAnswer[j]:
                     mark += markForPoint
                     break
         self.user_mark = mark
@@ -223,10 +223,13 @@ class QstSomeAnswer(QstOneAnswer):  # запитання з вибором де�
     def writeTestFile(self, file):
         file.write('QstSomeAnswer\n')
         options = ''
+        rights = ''
         for i in self._answerOptions:
             options += i + '\n'
+        for i in self._rightAnswer:
+            rights += i + '\n'
         file.write(str(self._question) + '\n' + str(len(self._answerOptions)) + '\n' + options +
-                   self._rightAnswer + '\n' + self.rating + '\n')
+                   rights + self.rating + '\n')
 
 
 class QstTable(QstSomeAnswer):  # запитання з кількома варіантами відповіді в таблиці, наслідує клас з декількома варіантами відповідей
@@ -245,8 +248,8 @@ class QstTable(QstSomeAnswer):  # запитання з кількома вар�
         self.lquestions = input()
         print('Input options in format ['',''...]\n')
         self.options = input()
-        print('Input indexes of right answers in format [[i],[i1,i]]\n')
-        self._rightAnswer = input()
+        print('Input indexes of right answers in format [i],[i1,i]\n')
+        self._rightAnswer = [input()]
         print('Input question valuation\n')
         self.rating = int(input())
         self.formTable(self.rating)
@@ -295,7 +298,7 @@ class QstTable(QstSomeAnswer):  # запитання з кількома вар�
             self._rightAnswer[i] = file.readline().strip("\n")
         self.rating = int(file.readline().strip("\n"))
 
-    def printTable(self):
+    def printQ(self):
         print(self._question)
         row = ''
         for i in range(self.sizeHeight):

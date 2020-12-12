@@ -14,7 +14,7 @@ class Test(): # клас менеджер-тест, взаємодія і з а�
     def workTestFile(self):# метод створює файл, у який записуються питання тесту
         self.ftest = open('{}.txt'.format(self.title), "w")
         self.ftest.write(self.title + "\n")
-        self.ftest.write(self.description + "\n" + "\n")
+        self.ftest.write(self.description + "\n")
         self.ftest.close()
         self.ftest = open('{}.txt'.format(self.title), "a")
         for i in range(len(self.questions)):
@@ -28,14 +28,14 @@ class Test(): # клас менеджер-тест, взаємодія і з а�
 
     def workAnswerFile(self):  # метод записує усі відповіді певного респондента
         self.fanswers = open('{} answers.txt'.format(self.title), "a")
-        self.fanswers.write(self.questions[0].user_answer + "\n")
+        self.fanswers.write("\n" + self.questions[0].user_answer + "\n")
         i = 1
         while i < (len(self.questions)):
             self.fanswers.write(str(i) + "\n")
-            self.fanswers.write(self.questions[i].user_answer)
-            self.fanswers.write(self.questions[i].user_mark)
+            self.fanswers.write(str(self.questions[i].user_answer) + "\n")
+            self.fanswers.write(str(self.questions[i].user_mark) + "\n")
             i += 1
-        self.fanswers.write("\n" + self.totalUserMark())
+        self.fanswers.write("\n" + str(self.totalUserMark()))
         self.fanswers.close()
 
     def add(self, type):# метод додає нове питання у тест
@@ -90,14 +90,27 @@ class Test(): # клас менеджер-тест, взаємодія і з а�
 
     def totalUserMark(self):# метод рахує бал користувача за всі питання разом
         for i in self.questions:
-            self.mark += i.user_mark
+            self.mark += int(i.user_mark)
         return self.mark
 
     def totalTestMark(self):# метод рахує повний бал тесту
         for i in self.questions:
-            self.total_mark += i.rating
+            self.total_mark += int(i.rating)
         return self.total_mark
 
     def passingTest(self):# метод відображає кожне питання для проходження, зберігає відповідь користувача
+        print(self.title)
+        print(self.description + '\n')
+        for i in range(len(self.questions)):
+            self.questions[i].printQ()
+            self.questions[i].userGetAnswer()
+        print('Congratulation!\n' + 'Your mark ' + str(self.totalUserMark()) + "/" + str(self.totalTestMark()))
+        self.workAnswerFile()
 
-        return
+test1 = Test('What do you know?', 'Something about information you may know')
+test1.createAnswerFile()
+test1.add('QstEnterTextShort')
+test1.add('QstTrueFalse')
+test1.add('QstEnterText')
+test1.workTestFile()
+test1.passingTest()

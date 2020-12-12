@@ -1,0 +1,20 @@
+What do you know?
+Something about information you may know
+
+QstEnterShortText
+What is your name?
+-
+0
+
+
+QstTrueFalse
+Are you happy?
+True
+0
+
+
+QstEnterLongText
+What do you know?
+I know a lot
+3
+
