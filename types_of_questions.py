@@ -291,8 +291,8 @@ class QstTable(QstSomeAnswer):  # запитання з кількома вар�
 
 class QstScale:  # запитання з відповіддю числом (передбачало шкалу з повзунком)
     def __init__(self):
-        self._question = question
-        self._right_answer = right_answer
+        self._question = ''
+        self._right_answer = ''
         self.rating = 0
         #self.start = 0
         #self.end = 100
@@ -311,7 +311,7 @@ class QstScale:  # запитання з відповіддю числом (пе
 
     def userGetAnswer(self):
         self.user_answer = float(input())
-        userMark(self.user_answer)
+        self.userMark(self.user_answer)
 
     def writeTestFile(self, ftest):
         ftest.write('QstScale\n')
@@ -320,6 +320,14 @@ class QstScale:  # запитання з відповіддю числом (пе
         ftest.write(str(self.rating) + '\n',end = '\n')
         ftest.close()
 
+    def add(self):
+        print('Input question\n')
+        self._question = input()
+        print('Input the right answer\n')
+        self._right_answer = float(input())
+        print('Input question valuation\n')
+        self.setRating(float(input()))
+        
     def readTestFile(self, file):
         self._question = file.readline()
         self._right_answer = float(file.readline())
