@@ -95,7 +95,7 @@ class Test(): # клас менеджер-тест, взаємодія і з а�
 
     def totalTestMark(self):# метод рахує повний бал тесту
         for i in self.questions:
-            self.total_mark += i.rating()
+            self.total_mark += i.rating
         return self.total_mark
 
     def passingTest(self):# метод відображає кожне питання для проходження, зберігає відповідь користувача
