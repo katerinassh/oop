@@ -310,7 +310,7 @@ class QstScale:  # запитання з відповіддю числом (пе
         print(str(self._question), end='\n')
 
     def userGetAnswer(self):
-        self.user_answer = double(input())
+        self.user_answer = float(input())
         userMark(self.user_answer)
 
     def writeTestFile(self, ftest):
