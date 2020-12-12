@@ -26,7 +26,7 @@ class Test(): # клас менеджер-тест, взаємодія і з а�
 
     def workAnswerFile(self):  # метод записує усі відповіді певного респондента
         self.fanswers = open('{} answers.txt'.format(self.title), "a")
-        self.fanswers.write(self.questions[0].user_anwer + "\n")
+        self.fanswers.write(self.questions[0].user_answer + "\n")
         i = 1
         while i < (len(self.questions)):
             self.fanswers.write(str(i) + "\n")
