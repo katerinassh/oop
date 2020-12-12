@@ -303,7 +303,7 @@ class QstScale:  # запитання з відповіддю числом (пе
         self.userMark(self.user_answer)
 
     def writeTestFile(self, ftest):
-        ftest.write('QstScale\n')
+        ftest.write('QstScale', end = '\n')
         ftest.write(self._question,end = '\n')
         ftest.write(self._right_answer, end = '\n')
         ftest.write(str(self.rating) + '\n',end = '\n')
@@ -318,9 +318,9 @@ class QstScale:  # запитання з відповіддю числом (пе
         self.setRating(float(input()))
         
     def readTestFile(self, file):
-        self._question = file.readline()
-        self._right_answer = float(file.readline())
-        self.rating = float(file.readline())
+        self._question = file.readline().strip("\n")
+        self._right_answer = float(file.readline()).strip("\n")
+        self.rating = float(file.readline()).strip("\n")
 
 
 class QstTableOne:  # встановлення відповідності
@@ -398,13 +398,13 @@ class QstTableOne:  # встановлення відповідності
         self.setRating(float(input()))
 
     def readTestFile(self, file):
-        self._question = file.readline()
-        self.num_answers = int(file.readline())
+        self._question = file.readline().strip("\n")
+        self.num_answers = int(file.readline()).strip("\n")
         for i in range(self.num_answers):
-            self.text_questions[i] = file.readline()
-            self.text_answers[i] = file.readline()
-        self._right_answer = file.readline()
-        self.rating = float(file.readline())
+            self.text_questions[i] = file.readline().strip("\n")
+            self.text_answers[i] = file.readline().strip("\n")
+        self._right_answer = file.readline().strip("\n")
+        self.rating = float(file.readline().strip("\n"))
 
     def writeTestFile(self, ftest):
         ftest.write('QstTableOne\n')
