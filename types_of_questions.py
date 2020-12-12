@@ -167,7 +167,15 @@ class QstOneAnswer:  # запитання з вибором однієї пра�
         for i in self._answerOptions:
             options += i + '\n'
         file.write(str(self._question) + '\n' + str(len(self._answerOptions)) + '\n' + options +
-                   self._rightAnswer + '\n' + self.rating + '\n')
+                   self._rightAnswer + '\n' + self.rating + '\n\n')
+
+    def readTestFile(self, file):
+        self._question = file.readline().strip("\n")
+        self._answerOptions = int(file.readline()).strip("\n")
+        for i in range(len(self._answerOptions)):
+            self._answerOptions[i] = file.readline().strip("\n")
+        self._rightAnswer = file.readline().strip("\n")
+        self.rating = float(file.readline().strip("\n"))
 
     def printQ(self):
         options = ''
@@ -216,9 +224,9 @@ class QstSomeAnswer(QstOneAnswer):  # запитання з вибором де�
 
 class QstTable(QstSomeAnswer):  # запитання з кількома варіантами відповіді в таблиці, наслідує клас з декількома варіантами відповідей
     def __init__(self):
-        self.questions = []
+        self.lquestions = []
         self.options = []
-        self.sizeHeight = len(self.questions)
+        self.sizeHeight = len(self.lquestions)
         self.table = [] * self.sizeHeight
         self.user_answer = None
         self.rating = 0
@@ -257,15 +265,28 @@ class QstTable(QstSomeAnswer):  # запитання з кількома вар�
 
     def writeTestFile(self, file):
         file.write('QstTable\n')
-        file.write(self._question)
-        row = ''
+        file.write(self._question + '\n')
+        file.write(str(self.sizeHeight) + '\n')
         for i in range(self.sizeHeight):
-            row += str(self.lquestions[i]) + ': '
-            for j in range(len(self.options)):
-                row += str(self.options[j]) + ' '
-            file.write(row)
-            row = ''
-        file.write(str(self._rightAnswer) + '\n' + str(self.rating) + '\n')
+            file.write(self.lquestions[i] + '\n')
+        file.write(str(len(self.options)) + '\n')
+        for i in range(len(self.options)):
+            file.write(self.options[i] + '\n')
+        for i in range(self.sizeHeight):
+            file.write(self._rightAnswer[i] + '\n')
+        file.write(str(self.rating) + '\n\n')
+
+    def readTestFile(self, file):
+        self._question = file.readline().strip("\n")
+        self.sizeHeight = int(file.readline().strip("\n"))
+        for i in range(self.sizeHeight):
+            self.lquestions[i] = file.readline().strip("\n")
+        length = int(file.readline().strip("\n"))
+        for i in range(length):
+            self.options[i] = file.readline().strip("\n")
+        for i in range(self.sizeHeight):
+            self._rightAnswer[i] = file.readline().strip("\n")
+        self.rating = int(file.readline().strip("\n"))
 
     def printTable(self):
         print(self._question)
@@ -307,7 +328,6 @@ class QstScale:  # запитання з відповіддю числом (пе
         ftest.write(self._question,end = '\n')
         ftest.write(self._right_answer, end = '\n')
         ftest.write(str(self.rating) + '\n',end = '\n')
-        ftest.close()
 
     def add(self):
         print('Input question\n')
@@ -414,6 +434,3 @@ class QstTableOne:  # встановлення відповідності
             ftest.write(self.text_questions[i] + '\n' + self.text_answers[i],end = '\n')
         ftest.write(self._right_answer, end = '\n')
         ftest.write(str(self.rating)+'\n', end='\n')
-        ftest.close()
-
-
