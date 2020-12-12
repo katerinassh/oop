@@ -15,6 +15,8 @@ class Test(): # клас менеджер-тест, взаємодія і з а�
         self.ftest = open('{}.txt'.format(self.title), "w")
         self.ftest.write(self.title + "\n")
         self.ftest.write(self.description + "\n" + "\n")
+        self.ftest.close()
+        self.ftest = open('{}.txt'.format(self.title), "a")
         for i in range(len(self.questions)):
             self.questions[i].writeTestFile(self.ftest)
         self.ftest.close()
