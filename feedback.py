@@ -1,4 +1,14 @@
-class Sort:                                          # додатковий клас-сортування
+class Feedback:  # клас-звіт, що надає статистичні дані
+    def __init__(self, file, qst_amount):
+        self.file = file
+        self.qst_amount = qst_amount
+
+        data_file = open(self.file, "r")
+        self.data = data_file.readlines()
+        data_file.close()
+
+        self.block = (self.qst_amount * 3) + 5
+
     def merge(self, the_input, first, middle, last):
         left = the_input[first:middle + 1]
         right = the_input[middle + 1:last + 1]
@@ -11,36 +21,22 @@ class Sort:                                          # додатковий кл
             elif r >= len(right):
                 the_input[i] = left[l]
                 l += 1
-            elif left[l] <= right[r]:
+            elif float(left[l]) <= float(right[r]):
                 the_input[i] = left[l]
                 l += 1
-            elif left[l] > right[r]:
+            elif float(left[l]) > float(right[r]):
                 the_input[i] = right[r]
                 r += 1
 
     def recursion(self, the_input, first, last):
         if first < last:
             middle = first + (last - first) // 2
-            s = Sort()
-            s.recursion(the_input, first, middle)
-            s.recursion(the_input, middle + 1, last)
-            s.merge(the_input, first, middle, last)
+            self.recursion(the_input, first, middle)
+            self.recursion(the_input, middle + 1, last)
+            self.merge(the_input, first, middle, last)
 
     def merge_sort(self, the_input):
-        s = Sort()
-        s.recursion(the_input, 0, len(the_input) - 1)
-
-
-class Feedback:  # клас-звіт, що надає статистичні дані
-    def __init__(self, file, qst_amount):
-        self.file = file
-        self.qst_amount = qst_amount
-
-        data_file = open(self.file, "r")
-        self.data = data_file.readlines()
-        data_file.close()
-
-        self.block = (self.qst_amount * 3) + 5
+        self.recursion(the_input, 0, len(the_input) - 1)
 
     def sort_by_name(self):  # створює новий файл, де респонденти відсортовані по іменам
         # *self.file = "answs.txt"
@@ -54,8 +50,7 @@ class Feedback:  # клас-звіт, що надає статистичні д�
             if (len(self.data) - i) < (2 * self.block):
                 break
 
-        s = Sort()
-        s.merge_sort(arr_names)
+        self.merge_sort(arr_names)
         for j in range(len(arr_names)):
             new_file.write(arr_names[j] + "\n")
 
@@ -73,8 +68,7 @@ class Feedback:  # клас-звіт, що надає статистичні д�
             if (len(self.data) - i) < (2 * self.block):
                 break
 
-        s = Sort()
-        s.merge_sort(arr_marks)
+        self.merge_sort(arr_marks)
         for j in range(len(arr_marks)):
             new_file.write(arr_marks[j] + "\n")
 
@@ -96,7 +90,7 @@ class Feedback:  # клас-звіт, що надає статистичні д�
                 if mark >= limit:
                     arr_marks.append(mark + ", " + name)
             else:
-                print("Запустіть команду заново та перевірте правильність написання.")
+                print("Run the command again and check the spelling.")
                 break
 
         for j in range(len(arr_marks)):
@@ -116,11 +110,8 @@ class Feedback:  # клас-звіт, що надає статистичні д�
         average = len(arr_marks) / sum(arr_marks)   # середній бал
         av_procent = (average * 100) / max_mark     # середня успішність у відсотках
 
-        new_file.write("Середній бал: " + str(average) + " із " + str(max_mark) + "\n")
-        new_file.write("Середня успішнсть у відсотках: " + str(av_procent) + "%"+ "\n")
-        new_file.write("Кількість відмінно пройдених тестів: " + str(amount_maxmark) + " із " + str(len(arr_marks)))
+        new_file.write("Average mark: " + str(average) + " from " + str(max_mark) + "\n")
+        new_file.write("Average success rate in percent: " + str(av_procent) + "%" + "\n")
+        new_file.write("Number of excellent tests: " + str(amount_maxmark) + " from " + str(len(arr_marks)))
 
         new_file.close()
-
-    #def find(self):
-    #    return

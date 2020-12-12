@@ -11,9 +11,10 @@ class QstTrueFalse:  # клас для виду запитань із двома
         self.rating = rating
 
     def userGetAnswer(self):
-        self.user_answer = input()
+        self.user_answer = input("Enter your answer:\n")
+        self.user_mark()
 
-    def userMarkAnswer(self):
+    def user_mark(self):
         mark = 0
         if self.user_answer == self._right_answer:
             mark = self.rating
@@ -37,8 +38,8 @@ class QstTrueFalse:  # клас для виду запитань із двома
         # *file = "test.txt"
         the_file = open(file, "a")
 
-        the_file.write("\n\n**" + str(indx_qst) + "**\n")
-        the_file.write(self._type + "\n" + self._question + "\n" + str(self.rating)+ "\n\n")
+        the_file.write("\n\n" + str(indx_qst) + "\n")
+        the_file.write(self._type + "\n" + self._question + "\n" + str(self.rating) + "\n\n")
 
         for i in range(2):
             the_file.write(self._answerOptions[i] + "\n")
@@ -51,8 +52,8 @@ class QstTrueFalse:  # клас для виду запитань із двома
         the_file = open(file, "a")
 
         qst = QstTrueFalse()
-        the_file.write("\n\n**" + str(indx_qst) + "**\n")
-        the_file.write(str(self.user_answer) + "\n" + str(qst.userMarkAnswer()))
+        the_file.write("\n\n" + str(indx_qst) + "\n")
+        the_file.write(str(self.user_answer) + "\n" + str(qst.user_mark()))
 
         the_file.close()
 
@@ -70,8 +71,9 @@ class QstEnterText:  # клас для виду запитань із введе
 
     def userGetAnswer(self):
         self.user_answer = input()[:1000]
+        self.user_mark()
 
-    def userMarkAnswer(self):
+    def user_mark(self):
         mark = 0
         if self.user_answer == self._right_answer:
             mark = self.rating
@@ -92,7 +94,7 @@ class QstEnterText:  # клас для виду запитань із введе
         # *file = "test.txt"
         the_file = open(file, "a")
 
-        the_file.write("\n\n**" + str(indx_qst) + "**\n")
+        the_file.write("\n\n" + str(indx_qst) + "\n")
         the_file.write(self._type + "\n" + self._question + "\n" + str(self.rating)+ "\n\n")
 
         the_file.write("\n" + str(self._right_answer))
@@ -104,7 +106,7 @@ class QstEnterText:  # клас для виду запитань із введе
         the_file = open(file, "a")
 
         qst = QstEnterText()
-        the_file.write("\n\n**" + str(indx_qst) + "**\n")
+        the_file.write("\n\n" + str(indx_qst) + "\n")
         the_file.write(str(self.user_answer) + "\n" + str(qst.userMarkAnswer()))
 
         the_file.close()
@@ -125,8 +127,8 @@ class QstEnterTextShort(QstEnterText):  # клас для виду запита�
         the_file = open(file, "a")
 
         qst = QstEnterTextShort()
-        the_file.write("\n\n**" + str(indx_qst) + "**\n")
-        the_file.write(str(self.user_answer) + "\n" + str(qst.userMarkAnswer()))
+        the_file.write("\n\n" + str(indx_qst) + "\n")
+        the_file.write(str(self.user_answer) + "\n" + str(qst.user_mark()))
 
         the_file.close()
 
