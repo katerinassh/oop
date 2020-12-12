@@ -5,6 +5,7 @@ class QstTrueFalse:  # клас для виду запитань із двома
         self._right_answer = None
         self._answerOptions = ["True", "False"]
         self.user_answer = None
+        self.user_mark = 0
         self.rating = 0
 
     def setRating(self, rating):
@@ -12,13 +13,11 @@ class QstTrueFalse:  # клас для виду запитань із двома
 
     def userGetAnswer(self):
         self.user_answer = input("Enter your answer:\n")
-        self.user_mark()
+        self.userMark()
 
-    def user_mark(self):
-        mark = 0
+    def userMark(self):
         if self.user_answer == self._right_answer:
-            mark = self.rating
-        return mark
+            self.user_mark = self.rating
 
     def printQ(self):
         options = ''
@@ -34,18 +33,12 @@ class QstTrueFalse:  # клас для виду запитань із двома
         print('Input question valuation\n')
         self.rating = input()
 
-    def save_qst(self, file, indx_qst):
-        # *file = "test.txt"
-        the_file = open(file, "a")
-
-        the_file.write("\n\n" + str(indx_qst) + "\n")
-        the_file.write(self._type + "\n" + self._question + "\n" + str(self.rating) + "\n\n")
+    def writeTestFile(self, the_file):
+        the_file.write("\n" + self._type + "\n" + self._question + "\n" + str(2) + "\n")
 
         for i in range(2):
             the_file.write(self._answerOptions[i] + "\n")
-        the_file.write("\n" + str(self._right_answer))
-
-        the_file.close()
+        the_file.write(str(self._right_answer) + "\n" + str(self.rating) + "\n")
 
     def save_answ(self, file, indx_qst):
         # *file = "answs.txt"
@@ -65,19 +58,20 @@ class QstEnterText:  # клас для виду запитань із введе
         self._right_answer = None
         self.rating = 0
         self.user_answer = None
+        self.user_mark = 0
 
     def setRating(self, rating):
         self.rating = rating
 
     def userGetAnswer(self):
         self.user_answer = input()[:1000]
-        self.user_mark()
+        self.userMark()
 
-    def user_mark(self):
-        mark = 0
-        if self.user_answer == self._right_answer:
-            mark = self.rating
-        return mark
+    def userMark(self):
+        right_answer = str(self._right_answer).lower()
+        user_answer = str(self.user_answer).lower()
+        if user_answer == right_answer:
+            self.user_mark = self.rating
 
     def printQ(self):
         print(str(self._question))
@@ -90,16 +84,8 @@ class QstEnterText:  # клас для виду запитань із введе
         print('Input question valuation\n')
         self.rating = input()
 
-    def save_qst(self, file, indx_qst):
-        # *file = "test.txt"
-        the_file = open(file, "a")
-
-        the_file.write("\n\n" + str(indx_qst) + "\n")
-        the_file.write(self._type + "\n" + self._question + "\n" + str(self.rating)+ "\n\n")
-
-        the_file.write("\n" + str(self._right_answer))
-
-        the_file.close()
+    def writeTestFile(self, the_file):
+        the_file.write("\n" + self._type + "\n" + self._question + "\n" + str(self._right_answer) + "\n" + str(self.rating) + "\n")
 
     def save_answ(self, file, indx_qst):
         # *file = "answs.txt"
@@ -118,9 +104,11 @@ class QstEnterTextShort(QstEnterText):  # клас для виду запита�
         self._type = "EnterShortText"
         self.rating = 0
         self.user_answer = None
+        self.user_mark = 0
 
     def userGetAnswer(self):
         self.user_answer = input()[:100]
+        self.userMark()
 
     def save_answ(self, file, indx_qst):
         # *file = "test.txt"
@@ -128,7 +116,7 @@ class QstEnterTextShort(QstEnterText):  # клас для виду запита�
 
         qst = QstEnterTextShort()
         the_file.write("\n\n" + str(indx_qst) + "\n")
-        the_file.write(str(self.user_answer) + "\n" + str(qst.user_mark()))
+        the_file.write(str(self.user_answer) + "\n" + str(qst.userMark()))
 
         the_file.close()
 
@@ -288,6 +276,7 @@ class QstTable(QstSomeAnswer):  # запитання з кількома вар�
                 row += str(self.options[j]) + ' '
             print(row)
             row = ''
+
 
 class QstScale:  # запитання з відповіддю числом (передбачало шкалу з повзунком)
     def __init__(self):
