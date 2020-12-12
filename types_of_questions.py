@@ -319,8 +319,8 @@ class QstScale:  # запитання з відповіддю числом (пе
         
     def readTestFile(self, file):
         self._question = file.readline().strip("\n")
-        self._right_answer = float(file.readline()).strip("\n")
-        self.rating = float(file.readline()).strip("\n")
+        self._right_answer = float(file.readline().strip("\n"))
+        self.rating = float(file.readline().strip("\n"))
 
 
 class QstTableOne:  # встановлення відповідності
