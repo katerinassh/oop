@@ -1,6 +1,6 @@
 class QstTrueFalse:  # клас для виду запитань із двома варіантами відповіді правда/брехня
     def __init__(self):
-        self._type = "TrueFalse"
+        self._type = "QstTrueFalse"
         self._question = None
         self._right_answer = None
         self._answerOptions = ["True", "False"]
@@ -53,7 +53,7 @@ class QstTrueFalse:  # клас для виду запитань із двома
 
 class QstEnterText:  # клас для виду запитань із введенням текстової відповідді
     def __init__(self):
-        self._type = "EnterLongText"
+        self._type = "QstEnterLongText"
         self._question = None
         self._right_answer = None
         self.rating = 0
@@ -101,7 +101,7 @@ class QstEnterText:  # клас для виду запитань із введе
 class QstEnterTextShort(QstEnterText):  # клас для виду запитань із введенням короткої текстової відповідді
     def __init__(self):
         super().__init__()
-        self._type = "EnterShortText"
+        self._type = "QstEnterShortText"
         self.rating = 0
         self.user_answer = None
         self.user_mark = 0
