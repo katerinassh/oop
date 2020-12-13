@@ -44,8 +44,6 @@ class Test(): # клас менеджер-тест, взаємодія і з а�
             qst = types_of_questions.QstTrueFalse()
         if type == 'QstEnterText':
             qst = types_of_questions.QstEnterText()
-        if type == 'QstEnterTextShort':
-            qst = types_of_questions.QstEnterTextShort()
         if type == 'QstOneAnswer':
             qst = types_of_questions.QstOneAnswer()
         if type == 'QstSomeAnswer':
