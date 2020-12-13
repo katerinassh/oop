@@ -14,7 +14,7 @@ class Test(): # клас менеджер-тест, взаємодія і з а�
     def workTestFile(self):# метод створює файл, у який записуються питання тесту
         self.ftest = open('{}.txt'.format(self.title), "w")
         self.ftest.write(self.title + "\n")
-        self.ftest.write(self.description + "\n")
+        self.ftest.write(self.description + "\n\n")
         self.ftest.close()
         self.ftest = open('{}.txt'.format(self.title), "a")
         for i in range(len(self.questions)):
@@ -70,8 +70,6 @@ class Test(): # клас менеджер-тест, взаємодія і з а�
             qst = types_of_questions.QstTrueFalse()
         if type == 'QstEnterText':
             qst = types_of_questions.QstEnterText()
-        if type == 'QstEnterTextShort':
-            qst = types_of_questions.QstEnterTextShort()
         if type == 'QstOneAnswer':
             qst = types_of_questions.QstOneAnswer()
         if type == 'QstSomeAnswer':
@@ -105,10 +103,11 @@ class Test(): # клас менеджер-тест, взаємодія і з а�
         print('Congratulation!\n' + 'Your mark ' + str(self.totalUserMark()) + "/" + str(self.totalTestMark()))
         self.workAnswerFile()
 
-test1 = Test('What do you know?', 'Something about information you may know')
-test1.createAnswerFile()
-test1.add('QstEnterTextShort')
-test1.add('QstTrueFalse')
-test1.add('QstEnterText')
-test1.workTestFile()
-test1.passingTest()
+
+#test1 = Test('What do you know?', 'Something about information you may know')
+#test1.createAnswerFile()
+#test1.add('QstEnterTextShort')
+#test1.add('QstTrueFalse')
+#test1.add('QstEnterText')
+#test1.workTestFile()
+#test1.passingTest()
