@@ -35,7 +35,7 @@ class Test(): # клас менеджер-тест, взаємодія і з а�
             self.fanswers.write(str(self.questions[i].user_answer) + "\n")
             self.fanswers.write(str(self.questions[i].user_mark) + "\n")
             i += 1
-        self.fanswers.write("\n" + str(self.totalUserMark()))
+        self.fanswers.write("\n" + str(self.totalUserMark()) + "\n")
         self.fanswers.close()
 
     def add(self, type):# метод додає нове питання у тест
