@@ -6,12 +6,10 @@ What is your name?
 -
 0
 
-
 QstTrueFalse
 Are you happy?
 True
 0
-
 
 QstEnterLongText
 What do you know?
