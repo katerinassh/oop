@@ -1,0 +1,18 @@
+How are you doing
+Something about information you may know
+
+QstEnterText
+What is your name?
+-
+0
+
+QstSomeAnswer
+Who is your friend?
+4
+Lily
+Sam
+Sophia
+John
+1 4 
+3
+

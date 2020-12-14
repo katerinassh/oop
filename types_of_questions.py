@@ -45,11 +45,11 @@ class QstTrueFalse:  # клас для виду запитань із двома
         print(str(self._question) + '\n' + options)
 
     def add(self):
-        print('Input question\n')
+        print('Input question')
         self._question = input()
-        print('Input the right answer (True or False)\n')
+        print('Input the right answer (True or False)')
         self._right_answer = input()
-        print('Input question valuation\n')
+        print('Input question valuation')
         self.rating = input()
 
     def writeTestFile(self, the_file):
@@ -89,11 +89,11 @@ class QstEnterText:  # клас для виду запитань із введе
         print(str(self._question))
 
     def add(self):
-        print('Input question\n')
+        print('Input question')
         self._question = input()
-        print('Input the right answer\n')
+        print('Input the right answer')
         self._right_answer = input()
-        print('Input question valuation\n')
+        print('Input question valuation')
         self.rating = input()
 
     def writeTestFile(self, the_file):
@@ -110,7 +110,7 @@ class QstOneAnswer:  # запитання з вибором однієї пра�
     def __init__(self):
         self._question = ''
         self._answerOptions = []
-        self._rightAnswer = None
+        self._rightAnswerIndex = None
         self.rating = 0
         self.user_answer = None
         self.user_mark = 0
@@ -127,14 +127,14 @@ class QstOneAnswer:  # запитання з вибором однієї пра�
         print('Input number of options')
         numOptions = int(input())
         self._answerOptions = [] * numOptions
-        print('Input index of right answer')
-        self._rightAnswer = int(input())
-        print('Input question valuation')
-        self.setRating(input())
         for i in range(numOptions):
             print('Input option ' + str(i + 1) + ' : ')
             option = input()
             self.enterOption(option)
+        print('Input index of right answer')
+        self._rightAnswerIndex = int(input())
+        print('Input question valuation')
+        self.setRating(input())
 
     def userGetAnswer(self):
         self.user_answer = input()
@@ -142,7 +142,7 @@ class QstOneAnswer:  # запитання з вибором однієї пра�
 
     def userMark(self, choice):
         mark = 0
-        if choice == self._rightAnswer:
+        if choice == self._answerOptions[self._rightAnswerIndex - 1]:
             mark = self.rating
         self.user_mark = mark
 
@@ -151,15 +151,17 @@ class QstOneAnswer:  # запитання з вибором однієї пра�
         options = ''
         for i in self._answerOptions:
             options += i + '\n'
-        file.write(str(self._question) + '\n' + str(len(self._answerOptions)) + '\n' + options +
-                   str(self._rightAnswer) + '\n' + str(self.rating) + '\n\n')
+        file.write(self._question)
+        file.write(str(len(self._answerOptions)) + '\n')
+        file.write(options + str(self._rightAnswerIndex) + '\n')
+        file.write(str(self.rating) + '\n\n')
 
     def readTestFile(self, file):
         self._question = file.readline().strip("\n")
-        self._answerOptions = file.readline().strip("\n")
-        for i in range(len(self._answerOptions)):
+        numOptions = int(file.readline().strip("\n"))
+        for i in range(numOptions):
             self._answerOptions[i] = file.readline().strip("\n")
-        self._rightAnswer = file.readline().strip("\n")
+        self._rightAnswerIndex = int(file.readline().strip("\n"))
         self.rating = float(file.readline().strip("\n"))
 
     def printQ(self):
@@ -172,6 +174,7 @@ class QstOneAnswer:  # запитання з вибором однієї пра�
 class QstSomeAnswer(QstOneAnswer):  # запитання з вибором декількох правильних відповідей, наслідує клас з одним правильним
     def __init__(self):
         super().__init__()
+        self._rightAnswerIndexArr = []
 
     def add(self):
         print('Input question')
@@ -179,21 +182,26 @@ class QstSomeAnswer(QstOneAnswer):  # запитання з вибором де�
         print('Input number of options')
         numOptions = int(input())
         self._answerOptions = [] * numOptions
-        print('Input indexes of right answers in format [i],[i2]')
-        self._rightAnswer = [input()]
-        print('Input question valuation')
-        self.setRating(input())
         for i in range(numOptions):
             print('Input option ' + str(i + 1) + ' : ')
             option = input()
             self.enterOption(option)
+        print('Input number of right options')
+        numRight = int(input())
+        for i in range(numRight):
+            print('Input index of right answer ' + str(i + 1) + ' : ')
+            right = input()
+            self._rightAnswerIndexArr.append(int(right))
+        print('Input question valuation')
+        self.setRating(input())
+
 
     def userMark(self, choice):
         mark = 0
-        markForPoint = int(self.rating) / len(self._rightAnswer)
-        for i in range(len(choice.strip(','))):
-            for j in range(len(self._rightAnswer)):
-                if choice.strip(',')[i] == self._rightAnswer[j]:
+        markForPoint = int(self.rating) / len(self._rightAnswerIndexArr)
+        for i in range(len(choice.split(', '))):
+            for j in range(len(self._rightAnswerIndexArr)):
+                if (choice.split(', '))[i] == self._answerOptions[int(self._rightAnswerIndexArr[j]) - 1]:
                     mark += markForPoint
                     break
         self.user_mark = mark
@@ -204,17 +212,28 @@ class QstSomeAnswer(QstOneAnswer):  # запитання з вибором де�
         rights = ''
         for i in self._answerOptions:
             options += i + '\n'
-        for i in self._rightAnswer:
-            rights += i + '\n'
+        for i in self._rightAnswerIndexArr:
+            rights += str(i) + ' '
         file.write(str(self._question) + '\n' + str(len(self._answerOptions)) + '\n' + options +
-                   rights + str(self.rating) + '\n\n')
+                   rights + '\n' + str(self.rating) + '\n\n')
+
+    def readTestFile(self, file):
+        self._question = file.readline().strip("\n")
+        numOptions = int(file.readline().strip("\n"))
+        for i in range(numOptions):
+            self._answerOptions[i] = file.readline().strip("\n")
+        numRight = int(file.readline().strip("\n"))
+        for i in range(numRight):
+            self._rightAnswerIndexArr = int(file.readline().strip("\n"))
+        self.rating = float(file.readline().strip("\n"))
 
 
 class QstTable(QstSomeAnswer):  # запитання з кількома варіантами відповіді в таблиці, наслідує клас з декількома варіантами відповідей
     def __init__(self):
-        self.lquestions = []
+        self._subquestions = []
         self.options = []
-        self.sizeHeight = len(self.lquestions)
+        self._answerOptions = []
+        self.sizeHeight = len(self._subquestions)
         self.table = [] * self.sizeHeight
         self.user_answer = None
         self.rating = 0
@@ -222,29 +241,40 @@ class QstTable(QstSomeAnswer):  # запитання з кількома вар�
     def add(self):
         print('Input main question')
         self._question = input()
-        print('Input local questions in format ['',''...]')
-        self.lquestions = input()
-        print('Input options in format ['',''...]\n')
-        self.options = input()
-        print('Input indexes of right answers in format [i],[i1,i]\n')
-        self._rightAnswer = [input()]
+        print('Input subquestions')
+        s = input()
+        self._subquestions = s.split(', ')
+        self.sizeHeight = len(self._subquestions)
+        print('Input number of options')
+        numOptions = int(input())
+        for i in range(numOptions):
+            print('Input option ' + (str(i + 1)))
+            option = input()
+            self.enterOption(option)
+        for i in range(numOptions):
+            subRightIndexes = []
+            print('Input indexes of right answers option ' + str(i + 1))
+            indexes = input().split(', ')
+            for j in range(len(indexes)):
+                subRightIndexes.append(indexes[i])
+            self._rightAnswerIndexArr.append(subRightIndexes)
         print('Input question valuation\n')
-        self.rating = int(input())
+        self.rating = float(input())
         self.formTable(self.rating)
 
     def formTable(self, rating):
         for i in range(self.sizeHeight):
-            qRow = QstSomeAnswer(self.lquestions[i], len(self.options), self._rightAnswer[i])
+            qRow = QstSomeAnswer(self._subquestions[i], len(self.options), self._rightAnswerIndex[i])
             self.table.append(qRow)
             self.table[i].setRating(rating / self.sizeHeight)
 
     def userMark(self, choice):
         mark = 0
         for i in range(self.sizeHeight):
-            if len(choice[i]) > len(self._rightAnswer[i]):
+            if len(choice[i]) > len(self._rightAnswerIndexArr[i]):
                 break
             else:
-                mark += self.table[i].userMarkPerSomeQ(choice[i])
+                mark += self.table[i].userMark(choice[i])
         self.user_mark = mark
 
     def userGetAnswer(self, file):
@@ -256,31 +286,31 @@ class QstTable(QstSomeAnswer):  # запитання з кількома вар�
         file.write(self._question + '\n')
         file.write(str(self.sizeHeight) + '\n')
         for i in range(self.sizeHeight):
-            file.write(self.lquestions[i] + '\n')
+            file.write(self._subquestions[i] + '\n')
         file.write(str(len(self.options)) + '\n')
         for i in range(len(self.options)):
             file.write(self.options[i] + '\n')
         for i in range(self.sizeHeight):
-            file.write(self._rightAnswer[i] + '\n')
+            file.write(self._rightAnswerIndexArr[i] + '\n')
         file.write(str(self.rating) + '\n\n')
 
     def readTestFile(self, file):
         self._question = file.readline().strip("\n")
         self.sizeHeight = int(file.readline().strip("\n"))
         for i in range(self.sizeHeight):
-            self.lquestions[i] = file.readline().strip("\n")
+            self._subquestions[i] = file.readline().strip("\n")
         length = int(file.readline().strip("\n"))
         for i in range(length):
             self.options[i] = file.readline().strip("\n")
         for i in range(self.sizeHeight):
-            self._rightAnswer[i] = file.readline().strip("\n")
+            self._rightAnswerIndexArr[i] = file.readline().strip("\n")
         self.rating = int(file.readline().strip("\n"))
 
     def printQ(self):
         print(self._question)
         row = ''
         for i in range(self.sizeHeight):
-            row += str(self.questions[i]) + ': '
+            row += str(self._subquestions[i]) + ': '
             for j in range(len(self.options)):
                 row += str(self.options[j]) + ' '
             print(row)

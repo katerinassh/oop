@@ -86,12 +86,12 @@ class Test(): # клас менеджер-тест, взаємодія і з а�
 
     def totalUserMark(self):# метод рахує бал користувача за всі питання разом
         for i in self.questions:
-            self.mark += int(i.user_mark)
+            self.mark += float(i.user_mark)
         return self.mark
 
     def totalTestMark(self):# метод рахує повний бал тесту
         for i in self.questions:
-            self.total_mark += int(i.rating)
+            self.total_mark += float(i.rating)
         return self.total_mark
 
     def passingTest(self):# метод відображає кожне питання для проходження, зберігає відповідь користувача
@@ -104,10 +104,14 @@ class Test(): # клас менеджер-тест, взаємодія і з а�
         self.workAnswerFile()
 
 
-#test1 = Test('What do you know?', 'Something about information you may know')
-#test1.createAnswerFile()
-#test1.add('QstEnterTextShort')
-#test1.add('QstTrueFalse')
-#test1.add('QstEnterText')
-#test1.workTestFile()
-#test1.passingTest()
+test1 = Test('How are you doing', 'Something about information you may know')
+test1.createAnswerFile()
+test1.add('QstEnterText')
+
+test1.add('QstTable')
+test1.workTestFile()
+test1.passingTest()
+
+
+
+
