@@ -1,6 +1,6 @@
 import types_of_questions
 
-class Test(): # клас менеджер-тест, взаємодія і з адміністратором, і зі звичайним користувачем
+class Test():  # клас менеджер-тест, взаємодія і з адміністратором, і зі звичайним користувачем
     def __init__(self, title, description):
         self.title = title
         self.description = description
