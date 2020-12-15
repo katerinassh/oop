@@ -1,18 +1,22 @@
 class QstName:
     def __init__(self):
-        self._question = "What is your name?"
+        self._question = None
         self.rating = 0
         self.user_answer = None
+        self.user_mark = self.rating
 
     def userGetAnswer(self):
         self.user_answer = input()[:1000]
+
+    def writeTestFile(self, the_file):
+        the_file.write('QstName\n')
+        the_file.write(str(self._question) + "\n\n")
 
     def printQ(self):
         print(str(self._question))
 
     def add(self):
-        print('Input question to get a name of a person.')
-        self._question = input()
+        self._question = "What is your name?"
 
     def readTestFile(self, file):
         self._question = file.readline().strip("\n")
