@@ -10,9 +10,9 @@ class QstName:
     def printQ(self):
         print(str(self._question))
 
-    def writeTestFile(self, the_file):
-        the_file.write('QstName\n')
-        the_file.write(self._question + "\n\n")
+    def add(self):
+        print('Input question to get a name of a person.')
+        self._question = input()
 
     def readTestFile(self, file):
         self._question = file.readline().strip("\n")
