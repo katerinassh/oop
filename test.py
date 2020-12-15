@@ -28,7 +28,7 @@ class Test(): # клас менеджер-тест, взаємодія і з а�
 
     def workAnswerFile(self):  # метод записує усі відповіді певного респондента
         self.fanswers = open('{} answers.txt'.format(self.title), "a")
-        self.fanswers.write("\n" + self.questions[0].user_answer + "\n")
+        self.fanswers.write("\n" + str(self.questions[0].user_answer) + "\n")
         i = 1
         while i < (len(self.questions)):
             self.fanswers.write(str(i) + "\n")
@@ -40,6 +40,8 @@ class Test(): # клас менеджер-тест, взаємодія і з а�
 
     def add(self, type):# метод додає нове питання у тест
         self.qamount += 1
+        if type == 'QstName':
+            qst = types_of_questions.QstName()
         if type == 'QstTrueFalse':
             qst = types_of_questions.QstTrueFalse()
         if type == 'QstEnterText':
@@ -104,13 +106,13 @@ class Test(): # клас менеджер-тест, взаємодія і з а�
         self.workAnswerFile()
 
 
-test1 = Test('How are you doing', 'Something about information you may know')
-test1.createAnswerFile()
-test1.add('QstEnterText')
+#test1 = Test('How are you doing', 'Something about information you may know')
+#test1.createAnswerFile()
+#test1.add('QstEnterText')
 
-test1.add('QstTable')
-test1.workTestFile()
-test1.passingTest()
+#test1.add('QstTable')
+#test1.workTestFile()
+#test1.passingTest()
 
 
 
