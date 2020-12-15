@@ -22,12 +22,12 @@ class Test(): # клас менеджер-тест, взаємодія і з а�
         self.ftest.close()
 
     def createAnswerFile(self):# метод створює файл, у який будуть записуватись відповіді респондентів
-        self.fanswers = open('{} answers.txt'.format(self.title), "w")
+        self.fanswers = open('{}_answers.txt'.format(self.title), "w")
         self.fanswers.write(self.title + "\n")
         self.fanswers.close()
 
     def workAnswerFile(self):  # метод записує усі відповіді певного респондента
-        self.fanswers = open('{} answers.txt'.format(self.title), "a")
+        self.fanswers = open('{}_answers.txt'.format(self.title), "a")
         self.fanswers.write("\n" + self.questions[0].user_answer + "\n")
         i = 1
         while i < (len(self.questions)):
