@@ -28,7 +28,7 @@ class Test():  # клас менеджер-тест, взаємодія і з а
 
     def workAnswerFile(self):  # метод записує усі відповіді певного респондента
         self.fanswers = open('{}_answers.txt'.format(self.title), "a")
-        self.fanswers.write("\n" + self.questions[0].user_answer + "\n")
+        self.fanswers.write("\n" + str(self.questions[0].user_answer) + "\n")
         self.fanswers = open('{} answers.txt'.format(self.title), "a")
         self.fanswers.write("\n" + str(self.questions[0].user_answer) + "\n")
         i = 1
@@ -95,7 +95,7 @@ class Test():  # клас менеджер-тест, взаємодія і з а
 
     def totalTestMark(self):# метод рахує повний бал тесту
         for i in range(1, len(self.questions)):
-            self.mark += float(self.questions[i].rating)
+            self.total_mark += float(self.questions[i].rating)
         return self.total_mark
 
     def passingTest(self):# метод відображає кожне питання для проходження, зберігає відповідь користувача
@@ -108,13 +108,12 @@ class Test():  # клас менеджер-тест, взаємодія і з а
         self.workAnswerFile()
 
 
-#test1 = Test('How are you doing', 'Something about information you may know')
-#test1.createAnswerFile()
-#test1.add('QstEnterText')
-
-#test1.add('QstTable')
-#test1.workTestFile()
-#test1.passingTest()
+test1 = Test('How are you doing', 'Something about information you may know')
+test1.createAnswerFile()
+test1.add('QstName')
+test1.add('QstEnterText')
+test1.workTestFile()
+test1.passingTest()
 
 
 
