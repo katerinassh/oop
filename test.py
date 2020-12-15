@@ -17,7 +17,7 @@ class Test(): # клас менеджер-тест, взаємодія і з а�
         self.ftest.write(self.description + "\n\n")
         self.ftest.close()
         self.ftest = open('{}.txt'.format(self.title), "a")
-        for i in range(len(self.questions)):
+        for i in range(1, len(self.questions)):
             self.questions[i].writeTestFile(self.ftest)
         self.ftest.close()
 
@@ -85,13 +85,13 @@ class Test(): # клас менеджер-тест, взаємодія і з а�
         self.workTestFile()
 
     def totalUserMark(self):# метод рахує бал користувача за всі питання разом
-        for i in self.questions:
-            self.mark += float(i.user_mark)
+        for i in range(1, len(self.questions)):
+            self.mark += float(self.questions[i].user_mark)
         return self.mark
 
     def totalTestMark(self):# метод рахує повний бал тесту
-        for i in self.questions:
-            self.total_mark += float(i.rating)
+        for i in range(1, len(self.questions)):
+            self.mark += float(self.questions[i].rating)
         return self.total_mark
 
     def passingTest(self):# метод відображає кожне питання для проходження, зберігає відповідь користувача
