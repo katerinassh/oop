@@ -108,8 +108,7 @@ class Test:   # клас менеджер-тест, взаємодія і з а�
         print('Congratulation!\n' + 'Your mark ' + str(self.totalUserMark()) + "/" + str(self.totalTestMark()))
         self.workAnswerFile()
 
-    def readFromFile(self, file):
-
+'    def readFromFile(self, file):'
 
 
 
