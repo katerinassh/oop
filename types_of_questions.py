@@ -340,18 +340,17 @@ class QstScale:  # запитання з відповіддю числом (пе
         self.user_answer = float(input())
         self.userMark(self.user_answer)
 
-    def writeTestFile(self, ftest):
-        ftest.write('QstScale', end='\n')
-        ftest.write(self._question, end='\n')
-        ftest.write(self._right_answer, end='\n')
-        ftest.write(str(self.rating) + '\n', end='\n')
+    def writeTestFile(self, the_file):
+        the_file.write('QstScale\n')
+        the_file.write(str(self._question) + "\n")
+        the_file.write(str(self._right_answer) + "\n" + str(self.rating) + "\n\n")
 
     def add(self):
-        print('Input question\n')
+        print('Input question', end='\n')
         self._question = input()
-        print('Input the right answer\n')
+        print('Input the right answer', end='\n')
         self._right_answer = float(input())
-        print('Input question valuation\n')
+        print('Input question valuation', end='\n')
         self.setRating(float(input()))
         
     def readTestFile(self, file):
@@ -367,71 +366,64 @@ class QstTableOne:  # встановлення відповідності
         self.text_answers = None
         self.text_questions = None
         self.rating = 0
-        self._user_answer = None
-        self._right_answer = None
+        self.user_answer = ''
+        self._right_answer = ''
         self.user_mark = 0
 
     def setRating(self, rating):
         self.rating = rating
 
     def getTextAnswers(self):
-        for i in range(self.num_answers):
-            print('Answer ', str(i), ':', end=' ')
-            self.text_answers += input()
-            print(end='\n')
+        for i in range(0, self.num_answers):
+            print('Answer ', str(i+1), ':', end=' ')
+            self.text_answers.append(input())
 
     def getTextQuestions(self):
-        for i in range(self.num_questions):
-            print('Question ', str(i), ':', end=' ')
-            self.text_questions[i] = str(input())
-            print(end='\n')
+        for i in range(self.num_answers):
+            print('Question ', str(i+1), ':', end=' ')
+            self.text_questions.append(str(input()))
 
     def setRightAnswer(self):
         self._right_answer = input()
 
     def userGetAnswer(self):
-        for i in range(self.num_questions):
-            ans = int(input())
-            while (ans > self.num_answers) or (ans<0):
-                print('Оберіть номер з перелічених')
-                ans = int(input())
-            self._user_answer[i] = ans
+        self.user_answer = input()
         self.userMark()
 
     def userMark(self):
         right_answer = self._right_answer.split()
-        user_answer = self._user_answer.split()
-        for i in range(right_answer):
-            if user_answer[i] == right_answer[i]:
+        answers = self.user_answer.split()
+        for i in range(len(right_answer)):
+            if answers[i] == right_answer[i]:
                 self.user_mark += self.rating / self.num_answers
 
     def printQ(self):
-        print(self._question, end = '\n\n')
+        print(self._question, end='\n')
+        print('Questions')
         for i in range(self.num_answers):
-            print(str(i+1)+self.text_questions[i], end='\n')
-        print(end='\n')
+            print(str(i+1)+'. '+self.text_questions[i], end='\n')
+        print('Answers')
         for i in range(self.num_answers):
-            print(str(i+1)+self.text_answers[i], end='\n')
+            print(str(i+1)+') '+self.text_answers[i], end='\n')
+        print('Input your answers')
 
     def add(self):
         print('Input main question')
         self._question = input()
-        print('Input number of options/questions\n')
+        print('Input number of options/questions')
         self.num_answers = int(input())
 
         self.text_answers = [] * self.num_answers
         self.text_questions = [] * self.num_answers
-        self._user_answer = [] * self.num_answers
-        self._right_answer = [] * self.num_answers
 
-        print('Input local questions\n')
+        print('Input local questions')
         self.getTextQuestions()
-        print('Input answers\n')
+        print('Input answers')
         self.getTextAnswers()
 
-        print('Input indexes of right answer for each local questions\n')
+        print('Input indexes of right answer for each local questions')
         self.setRightAnswer()
-        print('Input question valuation\n')
+        print('Input question valuation')
         self.setRating(float(input()))
 
     def readTestFile(self, file):
@@ -445,9 +437,10 @@ class QstTableOne:  # встановлення відповідності
 
     def writeTestFile(self, ftest):
         ftest.write('QstTableOne\n')
-        ftest.write(self._question, end='\n')
-        ftest.write(str(self.num_answers), end='\n')
+        ftest.write(self._question+'\n')
+        ftest.write(str(self.num_answers)+'\n')
         for i in range(self.num_answers):
-            ftest.write(self.text_questions[i] + '\n' + self.text_answers[i], end='\n')
-        ftest.write(self._right_answer, end='\n')
-        ftest.write(str(self.rating)+'\n', end='\n')
+            ftest.write(self.text_questions[i]+'\n')
+            ftest.write(self.text_answers[i]+'\n')
+        ftest.write(self._right_answer+'\n')
+        ftest.write(str(self.rating)+'\n\n')

@@ -1,6 +1,7 @@
 import types_of_questions
 
-class Test():  # клас менеджер-тест, взаємодія і з адміністратором, і зі звичайним користувачем
+
+class Test:   # клас менеджер-тест, взаємодія і з адміністратором, і зі звичайним користувачем
     def __init__(self, title, description):
         self.title = title
         self.description = description
@@ -11,17 +12,17 @@ class Test():  # клас менеджер-тест, взаємодія і з а
         self.ftest = None
         self.fanswers = None
 
-    def workTestFile(self):# метод створює файл, у який записуються питання тесту
-        self.ftest = open('{}.txt'.format(self.title), "w")
-        self.ftest.write(self.title + "\n")
-        self.ftest.write(self.description + "\n\n")
-        self.ftest.close()
-        self.ftest = open('{}.txt'.format(self.title), "a")
+    def workTestFile(self):  # метод створює файл, у який записуються питання тесту
+        ftest = open('{}.txt'.format(self.title), "w")
+        ftest.write(self.title + "\n")
+        ftest.write(self.description + "\n\n")
+        ftest.close()
+        ftest = open('{}.txt'.format(self.title), "a")
         for i in range(1, len(self.questions)):
-            self.questions[i].writeTestFile(self.ftest)
-        self.ftest.close()
+            self.questions[i].writeTestFile(ftest)
+        ftest.close()
 
-    def createAnswerFile(self):# метод створює файл, у який будуть записуватись відповіді респондентів
+    def createAnswerFile(self):  # метод створює файл, у який будуть записуватись відповіді респондентів
         self.fanswers = open('{}_answers.txt'.format(self.title), "w")
         self.fanswers.write(self.title + "\n")
         self.fanswers.close()
@@ -29,7 +30,7 @@ class Test():  # клас менеджер-тест, взаємодія і з а
     def workAnswerFile(self):  # метод записує усі відповіді певного респондента
         self.fanswers = open('{}_answers.txt'.format(self.title), "a")
         self.fanswers.write("\n" + str(self.questions[0].user_answer) + "\n")
-        self.fanswers = open('{} answers.txt'.format(self.title), "a")
+        self.fanswers = open('{}_answers.txt'.format(self.title), "a")
         self.fanswers.write("\n" + str(self.questions[0].user_answer) + "\n")
         i = 1
         while i < (len(self.questions)):
@@ -40,7 +41,7 @@ class Test():  # клас менеджер-тест, взаємодія і з а
         self.fanswers.write("\n" + str(self.totalUserMark()) + "\n")
         self.fanswers.close()
 
-    def add(self, type):# метод додає нове питання у тест
+    def add(self, type):  # метод додає нове питання у тест
         self.qamount += 1
         if type == 'QstName':
             qst = types_of_questions.QstName()
@@ -61,12 +62,12 @@ class Test():  # клас менеджер-тест, взаємодія і з а
         qst.add()
         self.questions.append(qst)
 
-    def remove(self, number):# метод видаляє певне питання з тесту
+    def remove(self, number):  # метод видаляє певне питання з тесту
         self.questions.pop(number - 1)
         self.qamount -= 1
         self.workTestFile()
 
-    def rewrite(self, number):# метод переписує певне питання
+    def rewrite(self, number):  # метод переписує певне питання
         self.remove(number)
         print('Input type of new question')
         type = input()
@@ -107,11 +108,16 @@ class Test():  # клас менеджер-тест, взаємодія і з а
         print('Congratulation!\n' + 'Your mark ' + str(self.totalUserMark()) + "/" + str(self.totalTestMark()))
         self.workAnswerFile()
 
+    #def readFromFile(self, file):
 
-test1 = Test('How are you doing', 'Something about information you may know')
+
+
+test1 = Test('SuperPuperTest', 'info')
 test1.createAnswerFile()
 test1.add('QstName')
-test1.add('QstEnterText')
+#test1.add('QstEnterText')
+test1.add('QstTableOne')
+#test1.add('QstScale')
 test1.workTestFile()
 test1.passingTest()
 

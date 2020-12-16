@@ -24,6 +24,7 @@ class Manager:
         title = file.readline().strip('\n')
         description = file.readline().strip('\n')
         self.current_test = test.Test(title, description)
+        #self.current_test.readFromFile(file)
 
     @staticmethod
     def delete():
@@ -35,5 +36,7 @@ class Manager:
 
 
 man = Manager()
-man.create_new_test()
-man.delete()
+#man.create_new_test()
+#man.delete()
+#man.open()
+
