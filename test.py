@@ -108,18 +108,12 @@ class Test:   # клас менеджер-тест, взаємодія і з а�
         print('Congratulation!\n' + 'Your mark ' + str(self.totalUserMark()) + "/" + str(self.totalTestMark()))
         self.workAnswerFile()
 
-    #def readFromFile(self, file):
+    def readFromFile(self, file):
 
 
 
-test1 = Test('SuperPuperTest', 'info')
-test1.createAnswerFile()
-test1.add('QstName')
-#test1.add('QstEnterText')
-test1.add('QstTableOne')
-#test1.add('QstScale')
-test1.workTestFile()
-test1.passingTest()
+
+
 
 
 
