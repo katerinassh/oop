@@ -90,11 +90,13 @@ class Test:   # клас менеджер-тест, взаємодія і з а�
         self.workTestFile()
 
     def totalUserMark(self):# метод рахує бал користувача за всі питання разом
+        self.mark = 0
         for i in range(1, len(self.questions)):
             self.mark += float(self.questions[i].user_mark)
         return self.mark
 
     def totalTestMark(self):# метод рахує повний бал тесту
+        self.total_mark = 0
         for i in range(1, len(self.questions)):
             self.total_mark += float(self.questions[i].rating)
         return self.total_mark
@@ -108,7 +110,8 @@ class Test:   # клас менеджер-тест, взаємодія і з а�
         print('Congratulation!\n' + 'Your mark ' + str(self.totalUserMark()) + "/" + str(self.totalTestMark()))
         self.workAnswerFile()
 
-'    def readFromFile(self, file):'
+   # def readFromFile(self, file):
+
 
 
 
