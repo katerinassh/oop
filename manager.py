@@ -34,15 +34,3 @@ class Manager:
         os.remove('{}.txt'.format(name))
         os.remove('{}_answers.txt'.format(name))
         print("File Removed!")
-
-
-man = Manager()
-man.create_new_test()
-man.current_test.add('QstName')
-man.current_test.add('QstEnterText')
-man.current_test.add('QstTableOne')
-man.current_test.add('QstScale')
-man.current_test.workTestFile()
-#man.delete()
-#man.open()
-

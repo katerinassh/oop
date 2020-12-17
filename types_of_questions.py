@@ -16,6 +16,13 @@ class QstName:
     def readTestFile(self, file):
         self._question = file.readline().strip("\n")
 
+class Qst:
+    def __init__(self):
+        self._question = None
+        self._right_answer = None
+
+
+
 
 class QstTrueFalse:  # клас для виду запитань із двома варіантами відповіді правда/брехня
     def __init__(self):
@@ -54,7 +61,7 @@ class QstTrueFalse:  # клас для виду запитань із двома
     def writeTestFile(self, the_file):
         the_file.write('QstTrueFalse\n')
         the_file.write(str(self._question) + "\n")
-        the_file.write(str(self._right_answer) + "\n" + str(self.rating) + "\n\n")
+        the_file.write(str(self._right_answer) + "\n" + str(float(self.rating)) + "\n\n")
 
     def readTestFile(self, file):
         self._question = file.readline().strip("\n")
@@ -71,7 +78,7 @@ class QstEnterText:  # клас для виду запитань із введе
         self.user_mark = 0
 
     def setRating(self, rating):
-        self.rating = rating
+        self.rating = float(rating)
 
     def userGetAnswer(self):
         self.user_answer = input()[:1000]
@@ -236,6 +243,7 @@ class QstTable(QstSomeAnswer):  # запитання з кількома вар�
         self.table = [] * self.sizeHeight
         self.user_answer = None
         self.rating = 0
+        self._rightAnswerIndexArr = []
 
     def add(self):
         print('Input main question')
@@ -255,7 +263,7 @@ class QstTable(QstSomeAnswer):  # запитання з кількома вар�
             print('Input indexes of right answers option ' + str(i + 1))
             indexes = input().split(', ')
             for j in range(len(indexes)):
-                subRightIndexes.append(indexes[i])
+                subRightIndexes.append(indexes[j])
             self._rightAnswerIndexArr.append(subRightIndexes)
         print('Input question valuation\n')
         self.rating = float(input())
@@ -263,7 +271,7 @@ class QstTable(QstSomeAnswer):  # запитання з кількома вар�
 
     def formTable(self, rating):
         for i in range(self.sizeHeight):
-            qRow = QstSomeAnswer(self._subquestions[i], len(self.options), self._rightAnswerIndex[i])
+            qRow = QstSomeAnswer(self._subquestions[i], len(self.options), self._rightAnswerIndexArr[i])
             self.table.append(qRow)
             self.table[i].setRating(rating / self.sizeHeight)
 

@@ -10,7 +10,7 @@ class Test:   # клас менеджер-тест, взаємодія і з а�
         self.total_mark = 0
         self.mark = 0
         self.ftest = None
-        self.fanswers = None
+        self.add('QstName')
 
     def workTestFile(self):  # метод створює файл, у який записуються питання тесту
         ftest = open('{}.txt'.format(self.title), "w")
@@ -23,23 +23,21 @@ class Test:   # клас менеджер-тест, взаємодія і з а�
         ftest.close()
 
     def createAnswerFile(self):  # метод створює файл, у який будуть записуватись відповіді респондентів
-        self.fanswers = open('{}_answers.txt'.format(self.title), "w")
-        self.fanswers.write(self.title + "\n")
-        self.fanswers.close()
+        fanswers = open('{}_answers.txt'.format(self.title), "w")
+        fanswers.write(self.title + "\n")
+        fanswers.close()
 
     def workAnswerFile(self):  # метод записує усі відповіді певного респондента
-        self.fanswers = open('{}_answers.txt'.format(self.title), "a")
-        self.fanswers.write("\n" + str(self.questions[0].user_answer) + "\n")
-        self.fanswers = open('{}_answers.txt'.format(self.title), "a")
-        self.fanswers.write("\n" + str(self.questions[0].user_answer) + "\n")
+        fanswers = open('{}_answers.txt'.format(self.title), "a")
+        fanswers.write("\n" + str(self.questions[0].user_answer) + "\n")
         i = 1
         while i < (len(self.questions)):
-            self.fanswers.write(str(i) + "\n")
-            self.fanswers.write(str(self.questions[i].user_answer) + "\n")
-            self.fanswers.write(str(self.questions[i].user_mark) + "\n")
+            fanswers.write(str(i) + "\n")
+            fanswers.write(str(self.questions[i].user_answer) + "\n")
+            fanswers.write(str(self.questions[i].user_mark) + "\n")
             i += 1
-        self.fanswers.write("\n" + str(self.totalUserMark()) + "\n")
-        self.fanswers.close()
+        fanswers.write("\n" + str(self.totalUserMark()) + "\n")
+        fanswers.close()
 
     def add(self, type):  # метод додає нове питання у тест
         self.qamount += 1
@@ -89,22 +87,23 @@ class Test:   # клас менеджер-тест, взаємодія і з а�
         self.questions.insert(number - 1, qst)
         self.workTestFile()
 
-    def totalUserMark(self):# метод рахує бал користувача за всі питання разом
+    def totalUserMark(self):  # метод рахує бал користувача за всі питання разом
         self.mark = 0
         for i in range(1, len(self.questions)):
             self.mark += float(self.questions[i].user_mark)
         return self.mark
 
-    def totalTestMark(self):# метод рахує повний бал тесту
+    def totalTestMark(self):  # метод рахує повний бал тесту
         self.total_mark = 0
         for i in range(1, len(self.questions)):
             self.total_mark += float(self.questions[i].rating)
         return self.total_mark
 
-    def passingTest(self):# метод відображає кожне питання для проходження, зберігає відповідь користувача
+    def passingTest(self):  # метод відображає кожне питання для проходження, зберігає відповідь користувача
         print(self.title)
         print(self.description + '\n')
         for i in range(len(self.questions)):
+            self.questions[i].user_mark = 0
             self.questions[i].printQ()
             self.questions[i].userGetAnswer()
         print('Congratulation!\n' + 'Your mark ' + str(self.totalUserMark()) + "/" + str(self.totalTestMark()))

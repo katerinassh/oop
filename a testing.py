@@ -1,10 +1,11 @@
-import test
+import manager
 
-test1 = test.Test('How are you doing', 'Something about information you may know')
-test1.createAnswerFile()
-test1.add('QstName')
-test1.add('QstEnterText')
-test1.add('QstOneAnswer')
-test1.workTestFile()
-test1.workAnswerFile()
-test1.passingTest()
+man = manager.Manager()
+man.create_new_test()
+man.current_test.add('QstEnterText')
+man.current_test.add('QstTable')
+man.current_test.workTestFile()
+man.current_test.passingTest()
+man.current_test.passingTest()
+man.current_test.workAnswerFile()
+#man.delete()

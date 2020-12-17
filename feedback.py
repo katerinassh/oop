@@ -113,5 +113,4 @@ class Feedback:  # клас-звіт, що надає статистичні д�
         new_file.write("Average mark: " + str(average) + " from " + str(max_mark) + "\n")
         new_file.write("Average success rate in percent: " + str(av_procent) + "%" + "\n")
         new_file.write("Number of excellent tests: " + str(amount_maxmark) + " from " + str(len(arr_marks)))
-
         new_file.close()
