@@ -217,7 +217,8 @@ class QstSomeAnswer(QstOneAnswer):  # запитання з вибором де�
             self._rightAnswerIndexArr = int(file.readline().strip("\n"))
         self.rating = float(file.readline().strip("\n"))
 
-class QstTable(Qst): # запитання з кількома варіантами відповіді в таблиці, наслідує клас з декількома варіантами відповідей
+
+class QstTable(Qst):  # запитання з кількома варіантами відповіді в таблиці
     def __init__(self):
         self.num_answers = 0
         self.num_questions = 0
