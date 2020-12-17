@@ -1,3 +1,35 @@
+def merge(the_input, first, middle, last):
+    left = the_input[first:middle + 1]
+    right = the_input[middle + 1:last + 1]
+    l = r = 0
+
+    for i in range(first, last + 1):
+        if l >= len(left):
+            the_input[i] = right[r]
+            r += 1
+        elif r >= len(right):
+            the_input[i] = left[l]
+            l += 1
+        elif float(left[l]) <= float(right[r]):
+            the_input[i] = left[l]
+            l += 1
+        elif float(left[l]) > float(right[r]):
+            the_input[i] = right[r]
+            r += 1
+
+
+def recursion(the_input, first, last):
+    if first < last:
+        middle = first + (last - first) // 2
+        recursion(the_input, first, middle)
+        recursion(the_input, middle + 1, last)
+        merge(the_input, first, middle, last)
+
+
+def merge_sort(the_input):
+    recursion(the_input, 0, len(the_input) - 1)
+
+
 class Feedback:  # клас-звіт, що надає статистичні дані
     def __init__(self, file, qst_amount):
         self.file = file
@@ -8,35 +40,6 @@ class Feedback:  # клас-звіт, що надає статистичні д�
         data_file.close()
 
         self.block = (self.qst_amount * 3) + 5
-
-    def merge(self, the_input, first, middle, last):
-        left = the_input[first:middle + 1]
-        right = the_input[middle + 1:last + 1]
-        l = r = 0
-
-        for i in range(first, last + 1):
-            if l >= len(left):
-                the_input[i] = right[r]
-                r += 1
-            elif r >= len(right):
-                the_input[i] = left[l]
-                l += 1
-            elif float(left[l]) <= float(right[r]):
-                the_input[i] = left[l]
-                l += 1
-            elif float(left[l]) > float(right[r]):
-                the_input[i] = right[r]
-                r += 1
-
-    def recursion(self, the_input, first, last):
-        if first < last:
-            middle = first + (last - first) // 2
-            self.recursion(the_input, first, middle)
-            self.recursion(the_input, middle + 1, last)
-            self.merge(the_input, first, middle, last)
-
-    def merge_sort(self, the_input):
-        self.recursion(the_input, 0, len(the_input) - 1)
 
     def sort_by_name(self):  # створює новий файл, де респонденти відсортовані по іменам
         # *self.file = "answs.txt"
@@ -68,7 +71,7 @@ class Feedback:  # клас-звіт, що надає статистичні д�
             if (len(self.data) - i) < (2 * self.block):
                 break
 
-        self.merge_sort(arr_marks)
+        merge_sort(arr_marks)
         for j in range(len(arr_marks)):
             new_file.write(arr_marks[j] + "\n")
 
