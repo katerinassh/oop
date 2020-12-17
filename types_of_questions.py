@@ -16,29 +16,27 @@ class QstName:
     def readTestFile(self, file):
         self._question = file.readline().strip("\n")
 
-class Qst:
+
+class Qst:  # Fabric
     def __init__(self):
-        self._question = None
+        self._question = ''
         self._right_answer = None
-
-
-
-
-class QstTrueFalse:  # клас для виду запитань із двома варіантами відповіді правда/брехня
-    def __init__(self):
-        self._question = None
-        self._right_answer = None
-        self._answerOptions = ["True", "False"]
-        self.user_answer = None
-        self.user_mark = 0
         self.rating = 0
+        self.user_mark = 0
+        self.user_answer = None
 
     def setRating(self, rating):
         self.rating = rating
 
     def userGetAnswer(self):
-        self.user_answer = input("Enter your answer:\n")
-        self.userMark()
+        self.user_answer = input()
+        self.userMark(self.user_answer)
+
+
+class QstTrueFalse(Qst):  # клас для виду запитань із двома варіантами відповіді правда/брехня
+    def __init__(self):
+        super(Qst, self).__init__()
+        self._answerOptions = ["True", "False"]
 
     def userMark(self):
         if self.user_answer == self._right_answer:
@@ -69,13 +67,9 @@ class QstTrueFalse:  # клас для виду запитань із двома
         self.rating = float(file.readline().strip("\n"))
 
 
-class QstEnterText:  # клас для виду запитань із введенням текстової відповідді
+class QstEnterText(Qst):  # клас для виду запитань із введенням текстової відповідді
     def __init__(self):
-        self._question = None
-        self._right_answer = None
-        self.rating = 0
-        self.user_answer = None
-        self.user_mark = 0
+        super(Qst, self).__init__()
 
     def setRating(self, rating):
         self.rating = float(rating)
@@ -112,20 +106,14 @@ class QstEnterText:  # клас для виду запитань із введе
         self.rating = float(file.readline().strip("\n"))
 
 
-class QstOneAnswer:  # запитання з вибором однієї правильної відповіді
+class QstOneAnswer(Qst):  # запитання з вибором однієї правильної відповіді
     def __init__(self):
-        self._question = ''
+        super(Qst, self).__init__()
         self._answerOptions = []
         self._rightAnswerIndex = None
-        self.rating = 0
-        self.user_answer = None
-        self.user_mark = 0
 
     def enterOption(self, option):
         self._answerOptions.append(option)
-
-    def setRating(self, rating):
-        self.rating = rating
 
     def add(self):
         print('Input question')
@@ -141,10 +129,6 @@ class QstOneAnswer:  # запитання з вибором однієї пра�
         self._rightAnswerIndex = int(input())
         print('Input question valuation')
         self.setRating(input())
-
-    def userGetAnswer(self):
-        self.user_answer = input()
-        self.userMark(self.user_answer)
 
     def userMark(self, choice):
         mark = 0
@@ -284,7 +268,7 @@ class QstTable(QstSomeAnswer):  # запитання з кількома вар�
                 mark += self.table[i].userMark(choice[i])
         self.user_mark = mark
 
-    def userGetAnswer(self, file):
+    def userGetAnswer(self):
         self.user_answer = input()
         self.userMark(self.user_answer)
 
@@ -324,29 +308,18 @@ class QstTable(QstSomeAnswer):  # запитання з кількома вар�
             row = ''
 
 
-class QstScale:  # запитання з відповіддю числом (передбачало шкалу з повзунком)
+class QstScale(Qst):  # запитання з відповіддю числом (передбачало шкалу з повзунком)
     def __init__(self):
-        self._question = ''
-        self._right_answer = ''
-        self.rating = 0
+        super(Qst, self).__init__()
         #self.start = 0
         #self.end = 100
-        self.user_answer = None
-        self.user_mark = 0
-
-    def setRating(self, rating):
-        self.rating = rating
 
     def userMark(self, answer):
-        if answer == self._right_answer:
+        if float(answer) == self._right_answer:
             self.user_mark = self.rating
 
     def printQ(self):
         print(str(self._question), end='\n')
-
-    def userGetAnswer(self):
-        self.user_answer = float(input())
-        self.userMark(self.user_answer)
 
     def writeTestFile(self, the_file):
         the_file.write('QstScale\n')
@@ -367,19 +340,12 @@ class QstScale:  # запитання з відповіддю числом (пе
         self.rating = float(file.readline().strip("\n"))
 
 
-class QstTableOne:  # встановлення відповідності
+class QstTableOne(Qst):  # встановлення відповідності
     def __init__(self):
-        self._question = ''
         self.num_answers = 0
         self.text_answers = None
         self.text_questions = None
-        self.rating = 0
-        self.user_answer = ''
-        self._right_answer = ''
-        self.user_mark = 0
 
-    def setRating(self, rating):
-        self.rating = rating
 
     def getTextAnswers(self):
         for i in range(0, self.num_answers):
@@ -393,10 +359,6 @@ class QstTableOne:  # встановлення відповідності
 
     def setRightAnswer(self):
         self._right_answer = input()
-
-    def userGetAnswer(self):
-        self.user_answer = input()
-        self.userMark()
 
     def userMark(self):
         right_answer = self._right_answer.split()
