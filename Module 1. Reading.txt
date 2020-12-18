@@ -1,0 +1,13 @@
+Module 1. Reading
+You gonna read text and answer questions about it
+
+QstEnterText
+Enter name of a main character
+Molly
+5
+
+QstScale
+How far was home?
+30.0
+10.0
+
