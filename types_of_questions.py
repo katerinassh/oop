@@ -132,17 +132,17 @@ class QstOneAnswer(Qst):  # запитання з вибором однієї п
 
     def writeTestFile(self, file):
         file.write('QstOneAnswer\n')
-        options = ''
-        for i in self._answerOptions:
-            options += i + '\n'
-        file.write(self._question)
+        file.write(self._question + '\n')
         file.write(str(len(self._answerOptions)) + '\n')
-        file.write(options + str(self._rightAnswerIndex) + '\n')
+        for i in self._answerOptions:
+            file.write(i + '\n')
+        file.write(str(self._rightAnswerIndex) + '\n')
         file.write(str(self.rating) + '\n\n')
 
     def readTestFile(self, file):
         self._question = file.readline().strip("\n")
         numOptions = int(file.readline().strip("\n"))
+        self._answerOptions = [None] * numOptions
         for i in range(numOptions):
             self._answerOptions[i] = file.readline().strip("\n")
         self._rightAnswerIndex = int(file.readline().strip("\n"))
@@ -191,23 +191,24 @@ class QstSomeAnswer(QstOneAnswer):  # запитання з вибором де�
 
     def writeTestFile(self, file):
         file.write('QstSomeAnswer\n')
-        options = ''
-        rights = ''
-        for i in self._answerOptions:
-            options += i + '\n'
+        file.write(str(self._question) + '\n')
+        file.write(str(len(self._answerOptions)) + '\n')
+        for i in range(len(self._answerOptions)):
+            file.write(self._answerOptions[i] + '\n')
         for i in self._rightAnswerIndexArr:
-            rights += str(i) + ' '
-        file.write(str(self._question) + '\n' + str(len(self._answerOptions)) + '\n' + options +
-                   rights + '\n' + str(self.rating) + '\n\n')
+            file.write(str(i) + ' ')
+        file.write('\n' + str(self.rating) + '\n\n')
 
     def readTestFile(self, file):
         self._question = file.readline().strip("\n")
         numOptions = int(file.readline().strip("\n"))
+        self._answerOptions = [None] * numOptions
         for i in range(numOptions):
             self._answerOptions[i] = file.readline().strip("\n")
         numRight = int(file.readline().strip("\n"))
+        self._rightAnswerIndexArr = [None] * numRight
         for i in range(numRight):
-            self._rightAnswerIndexArr = int(file.readline().strip("\n"))
+            self._rightAnswerIndexArr[i] = int(file.readline().strip("\n"))
         self.rating = float(file.readline().strip("\n"))
 
 
@@ -265,6 +266,7 @@ class QstTable(Qst):  # запитання з кількома варіанта�
         self.num_questions = int(input())
         self.text_questions = [] * self.num_questions
         print('Input number of options')
+        self.num_answers = int(input())
         self.text_answers = [] * self.num_answers
         print('Input local questions')
         self.getTextQuestions()
@@ -274,19 +276,24 @@ class QstTable(Qst):  # запитання з кількома варіанта�
         print('Input indexes of right answer for each local questions through (, )')
         self.setRightAnswer()
         print('Input question valuation')
-        self.setRating(float(input()))
+        rating = float(input())
+        self.setRating(rating)
 
     def readTestFile(self, file):
         self._question = file.readline().strip("\n")
         self.num_questions = int(file.readline().strip("\n"))
+        self.text_questions = [None] * self.num_questions
         for i in range(self.num_questions):
             self.text_questions[i] = file.readline().strip("\n")
 
         self.num_answers = int(file.readline().strip("\n"))
+        self.text_answers = [None] * self.num_answers
         for i in range(self.num_answers):
             self.text_answers[i] = file.readline().strip("\n")
 
-        self._right_answer = file.readline().strip("\n")
+        self._right_answers = [None] * self.num_questions
+        for i in range(self.num_questions):
+            self._right_answers[i] = file.readline().strip("\n")
         self.rating = float(file.readline().strip("\n"))
 
     def writeTestFile(self, file):
@@ -299,8 +306,8 @@ class QstTable(Qst):  # запитання з кількома варіанта�
         file.write(str(self.num_answers) + '\n')
         for i in range(self.num_answers):
             file.write(self.text_answers[i] + '\n')
-
-        file.write(self._right_answer + '\n')
+        for i in range(self.num_questions):
+            file.write(str(self._right_answers[i]) + '\n')
         file.write(str(self.rating) + '\n\n')
 
 
