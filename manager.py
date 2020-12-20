@@ -40,7 +40,7 @@ class Manager:
         print("File Removed!")
 
     def ConsoleView(self):
-        print('Welcome to program. Created by SulfurTech, katerinassh, valeriiadidych.')
+        print('Welcome to program. Created by SulfurTech, Katerina Shakiryanova, Valeria Didych.')
         print('''
 \tCommands:
 help - to show this info
@@ -53,6 +53,7 @@ pass - to pass current Test
 add - to add qst to current Test
 edit - to rewrite qst with number
 remove - to delete qst in Test
+save - to save changes
 sort by mark - to create new mark-sorted file with answers
 sort by name - to create new name-sorted file with answers
 statistic by mark - to create new file with statistic''')
@@ -74,6 +75,7 @@ pass - to pass current Test
 add - to add qst to current Test
 edit - to rewrite qst with number
 remove - to delete qst in Test
+save - to save changes
 sort by mark - to create new mark-sorted file with answers
 sort by name - to create new name-sorted file with answers
 statistic by mark - to create new file with statistic''')
@@ -99,6 +101,8 @@ statistic by mark - to create new file with statistic''')
                 print('Input number of Qst to delete')
                 num = int(input())
                 self.current_test.remove(num)
+            elif command == "save":
+                self.current_test.workTestFile()
             elif command == "sort by name":
                 self.feedback.sort_by_name()
             elif command == "sort by mark":

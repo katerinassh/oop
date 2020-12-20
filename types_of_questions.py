@@ -266,7 +266,6 @@ class QstTable(Qst):  # запитання з кількома варіанта�
         self.text_questions = [] * self.num_questions
         print('Input number of options')
         self.text_answers = [] * self.num_answers
-
         print('Input local questions')
         self.getTextQuestions()
         print('Input options')
