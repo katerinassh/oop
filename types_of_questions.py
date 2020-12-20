@@ -30,7 +30,7 @@ class Qst:  # Fabric
 
     def userGetAnswer(self):
         self.user_answer = input()
-        self.userMark(self.user_answer)
+        self.userMark()
 
 
 class QstTrueFalse(Qst):  # клас для виду запитань із двома варіантами відповіді правда/брехня
@@ -70,13 +70,6 @@ class QstTrueFalse(Qst):  # клас для виду запитань із дв�
 class QstEnterText(Qst):  # клас для виду запитань із введенням текстової відповідді
     def __init__(self):
         super(Qst, self).__init__()
-
-    def setRating(self, rating):
-        self.rating = float(rating)
-
-    def userGetAnswer(self):
-        self.user_answer = input()[:1000]
-        self.userMark()
 
     def userMark(self):
         right_answer = str(self._right_answer).lower().split()
@@ -136,6 +129,7 @@ class QstOneAnswer(Qst):  # запитання з вибором однієї п
             mark = self.rating
         self.user_mark = mark
 
+
     def writeTestFile(self, file):
         file.write('QstOneAnswer\n')
         options = ''
@@ -185,7 +179,6 @@ class QstSomeAnswer(QstOneAnswer):  # запитання з вибором де�
         print('Input question valuation')
         self.setRating(input())
 
-
     def userMark(self, choice):
         mark = 0
         markForPoint = int(self.rating) / len(self._rightAnswerIndexArr)
@@ -217,7 +210,8 @@ class QstSomeAnswer(QstOneAnswer):  # запитання з вибором де�
             self._rightAnswerIndexArr = int(file.readline().strip("\n"))
         self.rating = float(file.readline().strip("\n"))
 
-class QstTable(Qst): # запитання з кількома варіантами відповіді в таблиці, наслідує клас з декількома варіантами відповідей
+
+class QstTable(Qst):  # запитання з кількома варіантами відповіді в таблиці
     def __init__(self):
         self.num_answers = 0
         self.num_questions = 0
@@ -228,12 +222,12 @@ class QstTable(Qst): # запитання з кількома варіантам
 
     def getTextAnswers(self):
         for i in range(0, self.num_answers):
-            print('Option ' + str(i+1) + ':\n')
+            print('Option ' + str(i + 1) + ':\n')
             self.text_answers.append(input())
 
     def getTextQuestions(self):
         for i in range(self.num_questions):
-            print('Question ' + str(i+1) + ':\n')
+            print('Question ' + str(i + 1) + ':\n')
             self.text_questions.append(str(input()))
 
     def setRightAnswer(self):
@@ -299,7 +293,7 @@ class QstTable(Qst): # запитання з кількома варіантам
     def writeTestFile(self, file):
         file.write('QstTable\n')
         file.write(self._question + '\n')
-        file.write(str(self.num_questions)+'\n')
+        file.write(str(self.num_questions) + '\n')
         for i in range(self.num_questions):
             file.write(self.text_questions[i] + '\n')
 
@@ -314,11 +308,11 @@ class QstTable(Qst): # запитання з кількома варіантам
 class QstScale(Qst):  # запитання з відповіддю числом (передбачало шкалу з повзунком)
     def __init__(self):
         super(Qst, self).__init__()
-        #self.start = 0
-        #self.end = 100
+        # self.start = 0
+        # self.end = 100
 
-    def userMark(self, answer):
-        if float(answer) == self._right_answer:
+    def userMark(self):
+        if float(self.user_answer) == self._right_answer:
             self.user_mark = self.rating
 
     def printQ(self):
@@ -336,7 +330,7 @@ class QstScale(Qst):  # запитання з відповіддю числом 
         self._right_answer = float(input())
         print('Input question valuation', end='\n')
         self.setRating(float(input()))
-        
+
     def readTestFile(self, file):
         self._question = file.readline().strip("\n")
         self._right_answer = float(file.readline().strip("\n"))
@@ -346,17 +340,17 @@ class QstScale(Qst):  # запитання з відповіддю числом 
 class QstTableOne(Qst):  # встановлення відповідності
     def __init__(self):
         self.num_answers = 0
-        self.text_answers = None
-        self.text_questions = None
+        self.text_answers = []
+        self.text_questions = []
 
     def getTextAnswers(self):
         for i in range(0, self.num_answers):
-            print('Answer ', str(i+1), ':', end=' ')
+            print('Answer ', str(i + 1), ':', end=' ')
             self.text_answers.append(input())
 
     def getTextQuestions(self):
         for i in range(self.num_answers):
-            print('Question ', str(i+1), ':', end=' ')
+            print('Question ', str(i + 1), ':', end=' ')
             self.text_questions.append(str(input()))
 
     def setRightAnswer(self):
@@ -373,10 +367,10 @@ class QstTableOne(Qst):  # встановлення відповідності
         print(self._question, end='\n')
         print('Questions')
         for i in range(self.num_answers):
-            print(str(i+1)+'. '+self.text_questions[i], end='\n')
+            print(str(i + 1) + '. ' + self.text_questions[i], end='\n')
         print('Answers')
         for i in range(self.num_answers):
-            print(str(i+1)+') '+self.text_answers[i], end='\n')
+            print(str(i + 1) + ') ' + self.text_answers[i], end='\n')
         print('Input your answers')
 
     def add(self):
@@ -401,6 +395,8 @@ class QstTableOne(Qst):  # встановлення відповідності
     def readTestFile(self, file):
         self._question = file.readline().strip("\n")
         self.num_answers = int(file.readline().strip("\n"))
+        self.text_questions = [''] * self.num_answers
+        self.text_answers = [''] * self.num_answers
         for i in range(self.num_answers):
             self.text_questions[i] = file.readline().strip("\n")
             self.text_answers[i] = file.readline().strip("\n")
@@ -409,10 +405,10 @@ class QstTableOne(Qst):  # встановлення відповідності
 
     def writeTestFile(self, ftest):
         ftest.write('QstTableOne\n')
-        ftest.write(self._question+'\n')
-        ftest.write(str(self.num_answers)+'\n')
+        ftest.write(self._question + '\n')
+        ftest.write(str(self.num_answers) + '\n')
         for i in range(self.num_answers):
-            ftest.write(self.text_questions[i]+'\n')
-            ftest.write(self.text_answers[i]+'\n')
-        ftest.write(self._right_answer+'\n')
-        ftest.write(str(self.rating)+'\n\n')
+            ftest.write(self.text_questions[i] + '\n')
+            ftest.write(self.text_answers[i] + '\n')
+        ftest.write(self._right_answer + '\n')
+        ftest.write(str(self.rating) + '\n\n')
