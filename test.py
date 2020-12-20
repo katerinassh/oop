@@ -1,4 +1,5 @@
 import types_of_questions
+import os
 
 
 class Test:   # клас менеджер-тест, взаємодія і з адміністратором, і зі звичайним користувачем
@@ -109,13 +110,25 @@ class Test:   # клас менеджер-тест, взаємодія і з а�
         print('Congratulation!\n' + 'Your mark ' + str(self.totalUserMark()) + "/" + str(self.totalTestMark()))
         self.workAnswerFile()
 
-   # def readFromFile(self, file):
-
-
-
-
-
-
-
-
-
+    def readFromFile(self, file):
+        while not file.tell() == os.fstat(file.fileno()).st_size:
+            type = file.readline().strip('\n')
+            if type == 'QstName':
+                qst = types_of_questions.QstName()
+            if type == 'QstTrueFalse':
+                qst = types_of_questions.QstTrueFalse()
+            if type == 'QstEnterText':
+                qst = types_of_questions.QstEnterText()
+            if type == 'QstOneAnswer':
+                qst = types_of_questions.QstOneAnswer()
+            if type == 'QstSomeAnswer':
+                qst = types_of_questions.QstSomeAnswer()
+            if type == 'QstTable':
+                qst = types_of_questions.QstTable()
+            if type == 'QstScale':
+                qst = types_of_questions.QstScale()
+            if type == 'QstTableOne':
+                qst = types_of_questions.QstTableOne()
+            qst.readTestFile(file)
+            _ = file.readline()
+            self.questions.append(qst)

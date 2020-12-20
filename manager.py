@@ -23,7 +23,7 @@ class Manager:
         file = open('{}.txt'.format(name_of_test), 'r')
         title = file.readline().strip('\n')
         description = file.readline().strip('\n')
-        temp = file.readline()
+        _ = file.readline()
         self.current_test = test.Test(title, description)
         self.current_test.readFromFile(file)
 
@@ -34,3 +34,4 @@ class Manager:
         os.remove('{}.txt'.format(name))
         os.remove('{}_answers.txt'.format(name))
         print("File Removed!")
+

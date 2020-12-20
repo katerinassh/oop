@@ -1,0 +1,23 @@
+ReadTest
+info
+
+QstEnterText
+Vovan
+vova
+1
+
+QstTableOne
+QW
+2
+q
+q
+2
+2
+1 2
+20.0
+
+QstScale
+lions
+2.0
+1000.0
+

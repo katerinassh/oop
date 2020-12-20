@@ -8,15 +8,16 @@ import feedback
 #fb.statistic_by_mark(15)
 
 
-#man = manager.Manager()
-#man.create_new_test()
-#man.current_test.add('QstEnterText')
+man = manager.Manager()
+man.create_new_test()
+man.current_test.add('QstEnterText')
 
-#man.current_test.add('QstTable')
+man.current_test.add('QstTableOne')
 
-#man.current_test.add('QstScale')
-#man.current_test.workTestFile()
-#man.current_test.passingTest()
-#man.current_test.passingTest()
+man.current_test.add('QstScale')
+man.current_test.workTestFile()
+man.current_test.passingTest()
+man.current_test.passingTest()
 
 #man.delete()
+
