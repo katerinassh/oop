@@ -1,23 +1,26 @@
 import manager
-import feedback
 
-#fb = feedback.Feedback("Module 1. Reading", 2)
-#fb.filter_by_mark(12, "more")
-#fb.sort_by_mark()
-#fb.sort_by_name()
-#fb.statistic_by_mark(15)
+'''from tkinter import *
+import threading
+import time
 
+label = None
 
-man = manager.Manager()
-man.create_new_test()
-man.current_test.add('QstEnterText')
+def window():
+    global label
 
-man.current_test.add('QstTableOne')
+    root = Tk()
+    label = Label(root, text = '', fg='black')
+    label.pack()
+    root.mainloop()
 
-man.current_test.add('QstScale')
-man.current_test.workTestFile()
-man.current_test.passingTest()
-man.current_test.passingTest()
+thread = threading.Thread(target = window)
+thread.start()
+time.sleep(1)
 
-#man.delete()
+while True:
+    mytext = str(time.time())
+    label.config(text = mytext)'''  # теоретично можливий вивід в вікні
 
+Manager = manager.Manager()
+Manager.ConsoleView()
