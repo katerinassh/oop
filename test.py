@@ -34,7 +34,10 @@ class Test:   # клас менеджер-тест, взаємодія і з а�
         i = 1
         while i < (len(self.questions)):
             fanswers.write(str(i) + "\n")
-            fanswers.write(str(self.questions[i].user_answer) + "\n")
+            if hasattr(self.questions[i], 'user_answer'):
+                fanswers.write(str(self.questions[i].user_answer) + "\n")
+            else:
+                fanswers.write(str(self.questions[i].user_answers) + "\n")
             fanswers.write(str(self.questions[i].user_mark) + "\n")
             i += 1
         fanswers.write("\n" + str(self.totalUserMark()) + "\n")
@@ -107,7 +110,7 @@ class Test:   # клас менеджер-тест, взаємодія і з а�
             self.questions[i].user_mark = 0
             self.questions[i].printQ()
             self.questions[i].userGetAnswer()
-        print('Congratulation!\n' + 'Your mark ' + str(self.totalUserMark()) + "/" + str(self.totalTestMark()))
+        print('Congratulation!\n' + 'Your mark ' + str(round(self.totalUserMark(), 3)) + "/" + str(self.totalTestMark()))
         self.workAnswerFile()
 
     def readFromFile(self, file):

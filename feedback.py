@@ -80,14 +80,14 @@ class Feedback:  # клас-звіт, що надає статистичні д�
     def __init__(self, name_of_test, qst_amount):
         self.file = open('{}_answers.txt'.format(name_of_test), 'r')
         self.qst_amount = qst_amount
-
+        self.name = name_of_test
         self.data = self.file.readlines()
         self.file.close()
 
         self.block = (self.qst_amount * 3) + 4
 
     def sort_by_name(self):  # створює новий файл, де респонденти відсортовані по іменам
-        new_file = open("name-sorted.txt", "w")
+        new_file = open('{}_name-sorted.txt'.format(self.name), "w")
 
         arr_names = []
         for i in range(2, len(self.data), self.block):
@@ -104,7 +104,7 @@ class Feedback:  # клас-звіт, що надає статистичні д�
         new_file.close()
 
     def sort_by_mark(self):  # створює новий файл, де респонденти відсортовані по балам
-        new_file = open("mark-sorted.txt", "w")
+        new_file = open('{}_mark-sorted.txt'.format(self.name), "w")
 
         arr_marks = []
         for i in range(2, len(self.data), self.block):
@@ -146,7 +146,7 @@ class Feedback:  # клас-звіт, що надає статистичні д�
         new_file.close()
 
     def statistic_by_mark(self, max_mark):  # надає статистику по результатам проходження тесту
-        new_file = open("statistic.txt", 'w')
+        new_file = open('{}_statistic.txt'.format(self.name), "w")
 
         arr_marks = []
         for i in range(2, len(self.data), self.block):

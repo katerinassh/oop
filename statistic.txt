@@ -1,0 +1,3 @@
+Average mark: 3.233766233766233 from 9.0
+Average success rate in percent: 35.93073593073593%
+Number of excellent tests: 0 from 2
