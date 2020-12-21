@@ -39,7 +39,7 @@ class QstTrueFalse(Qst):  # клас для виду запитань із дв�
         self._answerOptions = ["True", "False"]
 
     def userMark(self):
-        if self.user_answer == self._right_answer:
+        if str(self.user_answer).lower() == str(self._right_answer).lower():
             self.user_mark = self.rating
 
     def printQ(self):
