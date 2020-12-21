@@ -11,7 +11,7 @@ Katerina
 Kyiv, Toronto
 1.0
 4
-christmas
+My favourite holiday is Christmas
 0
 
 4.467532467532466
@@ -27,7 +27,7 @@ Timur
 Lviv
 0
 4
-christmas
+My favourite holiday is Christmas
 0
 
 0.0
@@ -43,7 +43,7 @@ Emily
 Kyiv, London
 2.0
 4
-christmas
+My favourite holiday is Christmas
 0
 
 5.519480519480518
@@ -59,7 +59,7 @@ Peter
 Lviv, London, Toronto
 1.0
 4
-christmas
+My favourite holiday is Christmas
 0
 
 3.483766233766234

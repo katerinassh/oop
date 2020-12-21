@@ -79,14 +79,12 @@ def merge_sort_formark(the_input):
 class Feedback:  # клас-звіт, що надає статистичні дані
     def __init__(self, name_of_test, qst_amount):
         self.file = open('{}_answers.txt'.format(name_of_test), 'r')
-        self.qst_amount = qst_amount
+        self.qst_amount = qst_amount - 1
         self.name = name_of_test
         self.data = self.file.readlines()
         self.file.close()
-        #print("qamont:", self.qst_amount)
 
         self.block = (self.qst_amount * 3) + 4
-        #print("block: ", self.block)
 
     def sort_by_name(self):  # створює новий файл, де респонденти відсортовані по іменам
         new_file = open('{}_name-sorted.txt'.format(self.name), "w")
@@ -94,14 +92,8 @@ class Feedback:  # клас-звіт, що надає статистичні д�
         arr_names = []
         for i in range(2, len(self.data), self.block):
             name = str(self.data[i]).strip("\n")
-            #print(name, i)
             mark = str(self.data[i + (self.qst_amount * 3) + 2]).strip("\n")
-            #print(mark, i)
             arr_names.append(name + " | " + mark)
-            #print(arr_names)
-            #if (len(self.data) - i) < (self.qst_amount * self.block):
-            #    break
-
 
         merge_sort_forname(arr_names)
         for j in range(len(arr_names)):
@@ -125,8 +117,8 @@ class Feedback:  # клас-звіт, що надає статистичні д�
         new_file.close()
 
     def filter_by_mark(self, limit, less_or_more):  # показує лише результати респондентів в заданих межах балів
-        name_newfile = less_or_more + str(limit) + ".txt"
-        new_file = open(name_newfile, 'w')
+        lim_name = less_or_more + str(limit)
+        new_file = open('{}_{}.txt'.format(self.name, lim_name), "w")
 
         arr_marks = []
         for i in range(2, len(self.data), self.block):
@@ -161,7 +153,7 @@ class Feedback:  # клас-звіт, що надає статистичні д�
         average = sum(arr_marks) / len(arr_marks)   # середній бал
         av_procent = (average * 100) / max_mark     # середня успішність у відсотках
 
-        new_file.write("Average mark: " + str(average) + " from " + str(max_mark) + "\n")
-        new_file.write("Average success rate in percent: " + str(av_procent) + "%" + "\n")
+        new_file.write("Average mark: " + str(round(average, 3)) + " from " + str(max_mark) + "\n")
+        new_file.write("Average success rate in percent: " + str(round(av_procent, 3)) + "%" + "\n")
         new_file.write("Number of excellent tests: " + str(amount_maxmark) + " from " + str(len(arr_marks)))
         new_file.close()
