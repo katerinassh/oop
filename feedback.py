@@ -17,10 +17,10 @@ def merge_forname(the_input, first, middle, last):
         elif r >= len(right):
             the_input[i] = left[l]
             l += 1
-        elif left_splited[l][0] >= right_splited[r][0]:
+        elif left_splited[l][0] <= right_splited[r][0]:
             the_input[i] = left[l]
             l += 1
-        elif left_splited[l][0] < right_splited[r][0]:
+        elif left_splited[l][0] > right_splited[r][0]:
             the_input[i] = right[r]
             r += 1
 
@@ -94,8 +94,6 @@ class Feedback:  # клас-звіт, що надає статистичні д�
             name = str(self.data[i]).strip("\n")
             mark = str(self.data[i + (self.qst_amount * 3) + 2]).strip("\n")
             arr_names.append(name + ", " + mark)
-           # if (len(self.data) - i) < (2 * self.block):
-           #     break
 
         merge_sort_forname(arr_names)
         for j in range(len(arr_names)):
@@ -111,8 +109,6 @@ class Feedback:  # клас-звіт, що надає статистичні д�
             name = str(self.data[i]).strip("\n")
             mark = str(self.data[i + (self.qst_amount * 3) + 2]).strip("\n")
             arr_marks.append(mark + ", " + name)
-            #if (len(self.data) - i) < (2 * self.block):
-            #    break
 
         merge_sort_formark(arr_marks)
         for j in range(len(arr_marks)):
