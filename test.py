@@ -30,7 +30,7 @@ class Test:   # клас менеджер-тест, взаємодія і з а�
 
     def workAnswerFile(self):  # метод записує усі відповіді певного респондента
         fanswers = open('{}_answers.txt'.format(self.title), "a")
-        fanswers.write("\n" + str(self.questions[0].user_answer) + "\n")
+        fanswers.write(str(self.questions[0].user_answer) + "\n")
         i = 1
         while i < (len(self.questions)):
             fanswers.write(str(i) + "\n")
@@ -40,7 +40,7 @@ class Test:   # клас менеджер-тест, взаємодія і з а�
                 fanswers.write(str(self.questions[i].user_answers) + "\n")
             fanswers.write(str(self.questions[i].user_mark) + "\n")
             i += 1
-        fanswers.write("\n" + str(self.totalUserMark()) + "\n")
+        fanswers.write("\n" + str(self.totalUserMark()) + "\n\n")
         fanswers.close()
 
     def add(self, type):  # метод додає нове питання у тест
