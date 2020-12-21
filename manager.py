@@ -129,7 +129,7 @@ statistic by mark - to create new file with statistic''')
                     print('You need to save or open Test')
             elif command == "statistic by mark":
                 if self.access:
-                    self.feedback.statistic_by_mark(self.current_test.total_mark)
+                    self.feedback.statistic_by_mark(self.current_test.totalTestMark())
                 else:
                     print('You need to save or open Test')
             elif command == "filter":
