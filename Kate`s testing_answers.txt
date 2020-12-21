@@ -1,6 +1,5 @@
 Kate`s testing
 
-
 Katerina
 1
 ['2, 3', '2, 3, 4', '3']
@@ -13,7 +12,6 @@ Kyiv, Toronto
 1.0
 
 4.467532467532466
-
 
 Timur
 1
@@ -40,3 +38,19 @@ Kyiv, London
 2.0
 
 5.519480519480518
+
+Peter
+1
+['2', '1', '3, 4']
+1.483766233766234
+2
+2002
+1.0
+3
+Lviv, London, Toronto
+1.0
+4
+My favourite holiday is Christmas
+0
+
+3.483766233766234
