@@ -36,5 +36,10 @@ London
 Toronto
 2
 1 4 
-2
+2.0
+
+QstEnterText
+What is your favourite holday?
+I don`t have favourite holiday
+5
 
