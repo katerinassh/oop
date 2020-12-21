@@ -30,7 +30,7 @@ class Manager:
         self.current_test.readFromFile(file)
 
     def upd_feedback(self):
-        self.feedback = feedback.Feedback(name_of_test, self.current_test.qamount)
+        self.feedback = feedback.Feedback(self.current_test.title, self.current_test.qamount)
 
     @staticmethod
     def delete():
@@ -49,7 +49,7 @@ del - to delete Test and Answers files by input name
 open - to open file by input name
 new - to create new Test file
 exit - to close program
-\t(Test need to be opened before)
+\t(Test need to be opened or saved before)
 pass - to pass current Test 
 add - to add qst to current Test
 edit - to rewrite qst with number
