@@ -15,7 +15,6 @@ class Manager:
         self.current_test = test.Test(name_of_test, description)
         self.current_test.workTestFile()
         self.current_test.createAnswerFile()
-        self.feedback = feedback.Feedback(name_of_test, len(self.current_test.questions))
 
     def display(self):  # метод виводить тест для проходження
         self.current_test.passingTest()
@@ -29,7 +28,9 @@ class Manager:
         _ = file.readline()
         self.current_test = test.Test(title, description)
         self.current_test.readFromFile(file)
-        self.feedback = feedback.Feedback(name_of_test, 3)
+
+    def upd_feedback(self):
+        self.feedback = feedback.Feedback(name_of_test, self.current_test.qamount)
 
     @staticmethod
     def delete():
@@ -39,8 +40,8 @@ class Manager:
         os.remove('{}_answers.txt'.format(name))
         print("File Removed!")
 
-    def ConsoleView(self):
-        print('Welcome to program. Created by SulfurTech, Katerina Shakiryanova, Valeria Didych.')
+    def console_view(self):
+        print('Welcome to program. Created by Sierov Ivan, Katerina Shakiryanova, Valeria Didych.')
         print('''
 \tCommands:
 help - to show this info
@@ -60,31 +61,33 @@ statistic by mark - to create new file with statistic''')
         print('\nInput command', end='\n')
         while True:
             command = input()
-            if command == "new":
-                self.create_new_test()
-            elif command == "help":
+            if command == "help":
                 print('''
-\tCommands:
-help - to show this info
-del - to delete Test and Answers files by input name
-open - to open file by input name
-new - to create new Test file
-exit - to close program
-\t(Test need to be opened before)
-pass - to pass current Test 
-add - to add qst to current Test
-edit - to rewrite qst with number
-remove - to delete qst in Test
-save - to save changes
-sort by mark - to create new mark-sorted file with answers
-sort by name - to create new name-sorted file with answers
-statistic by mark - to create new file with statistic''')
+            \tCommands:
+            help - to show this info
+            del - to delete Test and Answers files by input name
+            open - to open file by input name
+            new - to create new Test file
+            exit - to close program
+            \t(Test need to be opened before)
+            pass - to pass current Test 
+            add - to add qst to current Test
+            edit - to rewrite qst with number
+            remove - to delete qst in Test
+            save - to save changes
+            sort by mark - to create new mark-sorted file with answers
+            sort by name - to create new name-sorted file with answers
+            statistic by mark - to create new file with statistic''')
                 continue
+            elif command == "new":
+                self.create_new_test()
+                self.upd_feedback()
             elif command == "del":
                 self.delete()
                 continue
             elif command == "open":
                 self.open()
+                self.upd_feedback()
             elif command == "pass":
                 self.display()
             elif command == "exit":
@@ -103,6 +106,7 @@ statistic by mark - to create new file with statistic''')
                 self.current_test.remove(num)
             elif command == "save":
                 self.current_test.workTestFile()
+                self.upd_feedback()
             elif command == "sort by name":
                 self.feedback.sort_by_name()
             elif command == "sort by mark":
