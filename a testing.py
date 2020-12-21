@@ -22,5 +22,6 @@ while True:
     mytext = str(time.time())
     label.config(text = mytext)'''  # теоретично можливий вивід в вікні
 
-Manager = manager.Manager()
-Manager.ConsoleView()
+#Manager = manager.Manager()
+#Manager.ConsoleView()
+
