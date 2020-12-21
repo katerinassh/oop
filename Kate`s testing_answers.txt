@@ -10,6 +10,9 @@ Katerina
 3
 Kyiv, Toronto
 1.0
+4
+christmas
+0
 
 4.467532467532466
 
@@ -22,6 +25,9 @@ Timur
 0
 3
 Lviv
+0
+4
+christmas
 0
 
 0.0
@@ -36,6 +42,9 @@ Emily
 3
 Kyiv, London
 2.0
+4
+christmas
+0
 
 5.519480519480518
 
@@ -50,7 +59,7 @@ Peter
 Lviv, London, Toronto
 1.0
 4
-My favourite holiday is Christmas
+christmas
 0
 
 3.483766233766234

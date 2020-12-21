@@ -5,9 +5,9 @@ def merge_forname(the_input, first, middle, last):
     left_splited = the_input[first:middle + 1]
     right_splited = the_input[middle + 1:last + 1]
     for j in range(len(left_splited)):
-        left_splited[j] = str(left_splited[j]).split(', ')
+        left_splited[j] = str(left_splited[j]).split(' | ')
     for k in range(len(right_splited)):
-        right_splited[k] = str(right_splited[k]).split(', ')
+        right_splited[k] = str(right_splited[k]).split(' | ')
 
     l = r = 0
     for i in range(first, last + 1):
@@ -44,9 +44,9 @@ def merge_formark(the_input, first, middle, last):
     left_splited = the_input[first:middle + 1]
     right_splited = the_input[middle + 1:last + 1]
     for j in range(len(left_splited)):
-        left_splited[j] = str(left_splited[j]).split(', ')
+        left_splited[j] = str(left_splited[j]).split(' | ')
     for k in range(len(right_splited)):
-        right_splited[k] = str(right_splited[k]).split(', ')
+        right_splited[k] = str(right_splited[k]).split(' | ')
 
     l = r = 0
     for i in range(first, last + 1):
@@ -83,8 +83,10 @@ class Feedback:  # клас-звіт, що надає статистичні д�
         self.name = name_of_test
         self.data = self.file.readlines()
         self.file.close()
+        #print("qamont:", self.qst_amount)
 
         self.block = (self.qst_amount * 3) + 4
+        #print("block: ", self.block)
 
     def sort_by_name(self):  # створює новий файл, де респонденти відсортовані по іменам
         new_file = open('{}_name-sorted.txt'.format(self.name), "w")
@@ -92,8 +94,14 @@ class Feedback:  # клас-звіт, що надає статистичні д�
         arr_names = []
         for i in range(2, len(self.data), self.block):
             name = str(self.data[i]).strip("\n")
+            #print(name, i)
             mark = str(self.data[i + (self.qst_amount * 3) + 2]).strip("\n")
-            arr_names.append(name + ", " + mark)
+            #print(mark, i)
+            arr_names.append(name + " | " + mark)
+            #print(arr_names)
+            #if (len(self.data) - i) < (self.qst_amount * self.block):
+            #    break
+
 
         merge_sort_forname(arr_names)
         for j in range(len(arr_names)):
@@ -108,7 +116,7 @@ class Feedback:  # клас-звіт, що надає статистичні д�
         for i in range(2, len(self.data), self.block):
             name = str(self.data[i]).strip("\n")
             mark = str(self.data[i + (self.qst_amount * 3) + 2]).strip("\n")
-            arr_marks.append(mark + ", " + name)
+            arr_marks.append(mark + " | " + name)
 
         merge_sort_formark(arr_marks)
         for j in range(len(arr_marks)):

@@ -15,7 +15,7 @@ class Manager:
         self.current_test = test.Test(name_of_test, description)
         self.current_test.workTestFile()
         self.current_test.createAnswerFile()
-        self.feedback = feedback.Feedback(name_of_test, self.current_test.qamount)
+        self.feedback = feedback.Feedback(name_of_test, len(self.current_test.questions))
 
     def display(self):  # метод виводить тест для проходження
         self.current_test.passingTest()
@@ -29,7 +29,7 @@ class Manager:
         _ = file.readline()
         self.current_test = test.Test(title, description)
         self.current_test.readFromFile(file)
-        self.feedback = feedback.Feedback(name_of_test, self.current_test.qamount)
+        self.feedback = feedback.Feedback(name_of_test, 3)
 
     @staticmethod
     def delete():
@@ -57,7 +57,7 @@ save - to save changes
 sort by mark - to create new mark-sorted file with answers
 sort by name - to create new name-sorted file with answers
 statistic by mark - to create new file with statistic''')
-        print('\nInput command',end = '\n')
+        print('\nInput command', end='\n')
         while True:
             command = input()
             if command == "new":

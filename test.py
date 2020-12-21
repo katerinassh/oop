@@ -30,7 +30,7 @@ class Test:   # клас менеджер-тест, взаємодія і з а�
 
     def workAnswerFile(self):  # метод записує усі відповіді певного респондента
         fanswers = open('{}_answers.txt'.format(self.title), "a")
-        fanswers.write(str(self.questions[0].user_answer) + "\n")
+        fanswers.write(str(self.questions[0].user_answer) + "\n\n")
         i = 1
         while i < (len(self.questions)):
             fanswers.write(str(i) + "\n")
@@ -47,6 +47,7 @@ class Test:   # клас менеджер-тест, взаємодія і з а�
         self.qamount += 1
         if type == 'QstName':
             qst = types_of_questions.QstName()
+            self.qamount -= 1
         if type == 'QstTrueFalse':
             qst = types_of_questions.QstTrueFalse()
         if type == 'QstEnterText':
