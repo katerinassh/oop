@@ -31,7 +31,7 @@ class Manager:
         self.current_test.readFromFile(file)
 
     def upd_feedback(self):
-        self.feedback = feedback.Feedback(self.current_test.title, self.current_test.qamount)
+        self.feedback = feedback.Feedback(self.current_test.title, len(self.current_test.questions))
 
     @staticmethod
     def delete():
